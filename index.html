@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#667eea" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="AI Avatar Assistant" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Mobile-first AI Avatar Assistant with voice interaction and multiple avatars" />
+  <meta name="keywords" content="AI, avatar, voice assistant, mobile, education" />
+  <meta name="author" content="Susanto Ganguly" />
+  
+  <!-- PWA Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/avatars/computer-teacher.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/avatars/computer-teacher.png" />
+  <link rel="apple-touch-icon" href="assets/avatars/computer-teacher.png" />
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="style.css" as="style" />
+  <link rel="preload" href="main.js" as="script" />
+  
+  <title>AI Avatar Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Avatar Selection Screen -->
+    <div class="avatar-selection" id="avatarSelection">
+      <h1>🎭 Choose Your AI Avatar</h1>
+      <p class="subtitle">Select an avatar to start your conversation</p>
+      
+      <div class="avatar-grid">
+        <div class="avatar-card" data-avatar="computer-teacher">
+          <img src="assets/avatars/computer-teacher.png" alt="Computer Teacher" />
+          <h3>Computer Teacher</h3>
+          <p>Programming & Technology</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="english-teacher">
+          <img src="assets/avatars/english-teacher.png" alt="English Teacher" />
+          <h3>English Teacher</h3>
+          <p>Language & Literature</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="biology-teacher">
+          <img src="assets/avatars/biology-teacher.png" alt="Biology Teacher" />
+          <h3>Biology Teacher</h3>
+          <p>Life Sciences</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="physics-teacher">
+          <img src="assets/avatars/physics-teacher.png" alt="Physics Teacher" />
+          <h3>Physics Teacher</h3>
+          <p>Physical Sciences</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="chemistry-teacher">
+          <img src="assets/avatars/chemistry-teacher.png" alt="Chemistry Teacher" />
+          <h3>Chemistry Teacher</h3>
+          <p>Chemical Sciences</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="geography-teacher">
+          <img src="assets/avatars/geography-teacher.png" alt="Geography Teacher" />
+          <h3>Geography Teacher</h3>
+          <p>Earth & Environment</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="hindi-teacher">
+          <img src="assets/avatars/hindi-teacher.png" alt="Hindi Teacher" />
+          <h3>Hindi Teacher</h3>
+          <p>Hindi Language</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="mathematics-teacher">
+          <img src="assets/avatars/mathematics-teacher.png" alt="Mathematics Teacher" />
+          <h3>Mathematics Teacher</h3>
+          <p>Math & Logic</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="doctor">
+          <img src="assets/avatars/doctor.png" alt="Doctor" />
+          <h3>Doctor</h3>
+          <p>Health & Medicine</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="engineer">
+          <img src="assets/avatars/engineer.png" alt="Engineer" />
+          <h3>Engineer</h3>
+          <p>Engineering & Design</p>
+        </div>
+        
+        <div class="avatar-card" data-avatar="lawyer">
+          <img src="assets/avatars/lawyer.png" alt="Lawyer" />
+          <h3>Lawyer</h3>
+          <p>Legal & Law</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="chat-interface" id="chatInterface" style="display: none;">
+      <div class="chat-header">
+        <button class="back-btn" id="backBtn">← Back</button>
+        <h2 id="avatarName">AI Avatar</h2>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+      </div>
+      
+      <div class="chat-container">
+        <div class="avatar-display">
+          <div class="avatar-animation" id="avatarAnimation">
+            <img id="avatarImage" src="" alt="Avatar" />
+            <div class="avatar-eyes" id="avatarEyes"></div>
+            <div class="avatar-mouth" id="avatarMouth"></div>
+          </div>
+        </div>
+        
+        <div class="response-area">
+          <div id="responseBox">Select an avatar to start your conversation...</div>
+          <div id="status"></div>
+        </div>
+        
+        <div class="controls">
+          <button id="talkBtn" disabled>
+            <img src="https://img.icons8.com/ios-filled/24/ffffff/microphone.png" alt="Talk" />
+            Talk
+          </button>
+          <button id="stopBtn" disabled>
+            <img src="https://img.icons8.com/ios-filled/24/ffffff/stop.png" alt="Stop" />
+            Stop
+          </button>
+          <button id="testBtn" onclick="testSound()">
+            <img src="https://img.icons8.com/ios-filled/24/ffffff/speaker.png" alt="Test" />
+            Test
+          </button>
+        </div>
+      </div>
+      
+      <div class="chat-sidebar" id="chatSidebar">
+        <!-- Code snippets and Q&A will appear here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html> 
