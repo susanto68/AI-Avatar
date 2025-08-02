@@ -1,0 +1,5 @@
+[33mdb88ce2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Fix mobile image display: add CORS headers, fallback system, and improved caching
+[33mf7cc534[m  Add PWA service worker for offline functionality and better mobile experience
+[33md544d87[m  Update README: Comprehensive documentation with modern features, deployment guide, and troubleshooting
+[33m2e6f527[m  Complete UI/UX Modernization: Mobile-first design, modern CSS, improved accessibility, and Vercel compatibility
+[33mf8c165a[m Update to Vercel-compatible format: ES modules, OpenAI SDK with Gemini base URL, proper error handling
