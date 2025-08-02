@@ -578,6 +578,35 @@ body {
   white-space: pre-wrap;
 }
 
+/* Greeting message styling */
+.greeting-message {
+  font-size: var(--font-size-lg) !important;
+  font-weight: 600 !important;
+  color: var(--accent-color) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+  animation: greetingPulse 2s ease-in-out;
+  padding: var(--space-4);
+  background: rgba(240, 147, 251, 0.1);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(240, 147, 251, 0.3);
+  margin: var(--space-4) 0 !important;
+}
+
+@keyframes greetingPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Q/A Summary */
 .qa-summary {
   background: var(--glass-bg);

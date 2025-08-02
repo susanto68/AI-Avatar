@@ -413,8 +413,16 @@ function getAvatarEmoji(avatarType) {
 }
 
 function speakGreeting(greeting) {
-  voiceContent.innerHTML = `<p>${greeting}</p>`;
-  speakText(greeting);
+  // Display greeting with better styling
+  voiceContent.innerHTML = `<p class="greeting-message">${greeting}</p>`;
+  
+  // Add a small delay before speaking to ensure display is updated
+  setTimeout(() => {
+    speakText(greeting);
+  }, 200);
+  
+  // Show notification that avatar is ready
+  showNotification('Avatar ready! You can start asking questions.', 'success');
 }
 
 function showChatInterface() {
