@@ -2,6 +2,7 @@
   "name": "ai-avatar-assistant",
   "version": "1.0.0",
   "description": "A mobile-first AI Avatar Assistant with multiple avatars, voice interaction, and domain-specific AI responses",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -22,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
-    "@google/generative-ai": "^0.2.1"
+    "openai": "^4.20.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

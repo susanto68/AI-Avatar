@@ -1,8 +1,8 @@
-const { readFileSync } = require('fs');
-const { join } = require('path');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import OpenAI from 'openai';
 
-// Load system prompt template
+// Load once at cold start from the project root api/ folder
 let SYSTEM_PROMPT_TEMPLATE;
 try {
   SYSTEM_PROMPT_TEMPLATE = readFileSync(
@@ -14,10 +14,11 @@ try {
   SYSTEM_PROMPT_TEMPLATE = "You are a helpful AI assistant. Provide clear, educational responses.";
 }
 
-const express = require('express');
-const router = express.Router();
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-router.post('/', async (req, res) => {
   const { message, avatar, systemPrompt } = req.body;
   
   if (!message) {
@@ -33,28 +34,35 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Initialize OpenAI client only when API key is available
+    const openai = new OpenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+      baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai'
+    });
 
     // Use provided system prompt or fallback to template
     const finalSystemPrompt = systemPrompt || SYSTEM_PROMPT_TEMPLATE;
     
-    const prompt = `${finalSystemPrompt}\n\nUser: ${message.trim()}\n\nAssistant:`;
-    
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const resp = await openai.chat.completions.create({
+      model: 'gemini-2.5-flash',
+      messages: [
+        { role: 'system', content: finalSystemPrompt },
+        { role: 'user', content: message.trim() }
+      ],
+      temperature: 0.6,
+      max_tokens: 1100
+    });
 
-    res.status(200).json({ reply: text.trim() });
+    res.status(200).json({ reply: resp.choices[0].message.content.trim() });
   } catch (err) {
-    console.error('Gemini API error:', err);
+    console.error('AI service error:', err);
     
     // Fallback to mock responses on API error
     const mockResponses = getMockResponses(avatar);
     const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
     res.status(200).json({ reply: randomResponse });
   }
-});
+}
 
 function getMockResponses(avatarType) {
   const responses = {
@@ -132,6 +140,4 @@ function getMockResponses(avatarType) {
     "That's an interesting question! Here's what I can tell you about this.",
     "I'm here to assist you with your learning journey. What would you like to explore?"
   ];
-}
-
-module.exports = router; 
+} 
