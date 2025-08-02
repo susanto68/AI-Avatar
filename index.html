@@ -170,8 +170,9 @@
       </section>
     </main>
 
-    <!-- Chat Interface -->
-    <main class="chat-interface" id="chatInterface" style="display: none;">
+    <!-- Avatar Chat Interface -->
+    <main class="avatar-chat" id="avatarChat" style="display: none;">
+      <!-- Top Navigation Bar -->
       <header class="chat-header">
         <button class="back-btn" id="backBtn" aria-label="Go back to avatar selection">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -179,10 +180,12 @@
           </svg>
           Back
         </button>
+        
         <div class="avatar-info-header">
           <h2 id="avatarName">AI Avatar</h2>
           <p id="avatarDomain">Subject Domain</p>
         </div>
+        
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
           <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"/>
@@ -194,24 +197,24 @@
         </button>
       </header>
       
+      <!-- Main Chat Container -->
       <section class="chat-container">
-        <div class="avatar-display">
-          <div class="avatar-animation" id="avatarAnimation">
-            <img id="avatarImage" src="" alt="Selected Avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-            <div class="avatar-fallback" id="avatarFallback" style="display: none;">🎭</div>
-            <div class="avatar-eyes" id="avatarEyes"></div>
-            <div class="avatar-mouth" id="avatarMouth"></div>
+        <!-- Selected Avatar Display -->
+        <div class="selected-avatar-display">
+          <div class="avatar-image-wrapper">
+            <img id="selectedAvatarImage" src="" alt="Selected Avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <div class="avatar-fallback" id="selectedAvatarFallback" style="display: none;">🎭</div>
           </div>
         </div>
         
-        <!-- Single Voice Window -->
+        <!-- Input/Output Voice Window -->
         <div class="voice-window" id="voiceWindow">
           <div class="voice-content" id="voiceContent">
             <p class="voice-placeholder">Click "Talk" to start your conversation...</p>
           </div>
         </div>
         
-        <!-- Q/A Summary Window (shows when response > 20 words) -->
+        <!-- Q/A Summary Window (shows when response > 10 words) -->
         <div class="qa-summary" id="qaSummary" style="display: none;">
           <div class="summary-header">
             <h3>Q/A Summary</h3>
@@ -242,8 +245,20 @@
           </div>
         </div>
         
-        <!-- Voice Controls -->
+        <!-- Voice Control Buttons -->
         <div class="voice-controls" role="group" aria-label="Voice controls">
+          <button id="startBtn" class="control-btn start-btn" aria-label="Resume voice reading">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Start
+          </button>
+          <button id="stopBtn" class="control-btn stop-btn" aria-label="Stop voice immediately">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="6" y="6" width="12" height="12"/>
+            </svg>
+            Stop
+          </button>
           <button id="talkBtn" class="control-btn talk-btn" aria-label="Start voice recognition">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
@@ -253,20 +268,9 @@
             </svg>
             Talk
           </button>
-          <button id="stopBtn" class="control-btn stop-btn" disabled aria-label="Stop voice recognition">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="6" y="6" width="12" height="12"/>
-            </svg>
-            Stop
-          </button>
-          <button id="startBtn" class="control-btn start-btn" disabled aria-label="Resume last spoken answer">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="5 3 19 12 5 21 5 3"/>
-            </svg>
-            Start
-          </button>
         </div>
         
+        <!-- Status Indicator -->
         <div id="status" class="status-indicator" role="status" aria-live="polite"></div>
       </section>
     </main>
