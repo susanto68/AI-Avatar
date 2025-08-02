@@ -82,6 +82,7 @@ let touchEndY = 0;
 let isGestureEnabled = true;
 
 // DOM Elements
+const loadingScreen = document.getElementById('loadingScreen');
 const avatarSelection = document.getElementById('avatarSelection');
 const chatInterface = document.getElementById('chatInterface');
 const avatarCards = document.querySelectorAll('.avatar-card');
@@ -98,21 +99,18 @@ const talkBtn = document.getElementById('talkBtn');
 const stopBtn = document.getElementById('stopBtn');
 const chatSidebar = document.getElementById('chatSidebar');
 
-// API Configuration
-const API_URL = '/api/chat';
-
-// Mobile Haptic Feedback
+// Utility Functions
 function hapticFeedback(type = 'light') {
   if (isMobile && navigator.vibrate) {
     switch (type) {
       case 'light':
-        navigator.vibrate(10);
-        break;
-      case 'medium':
         navigator.vibrate(50);
         break;
-      case 'heavy':
+      case 'medium':
         navigator.vibrate(100);
+        break;
+      case 'heavy':
+        navigator.vibrate(200);
         break;
       case 'success':
         navigator.vibrate([50, 50, 50]);
@@ -124,29 +122,61 @@ function hapticFeedback(type = 'light') {
   }
 }
 
-// Mobile Gesture Handling
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#48bb78' : type === 'error' ? '#f56565' : '#667eea'};
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    max-width: 300px;
+    word-wrap: break-word;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 300);
+  }, 3000);
+}
+
 function setupMobileGestures() {
   if (!isMobile) return;
-
+  
   // Swipe down to go back
   document.addEventListener('touchstart', (e) => {
     touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-
+  });
+  
   document.addEventListener('touchend', (e) => {
     if (!isGestureEnabled) return;
     
     touchEndY = e.changedTouches[0].clientY;
     const swipeDistance = touchStartY - touchEndY;
     
-    // Swipe down gesture (negative distance)
-    if (swipeDistance < -100 && chatInterface.style.display !== 'none') {
-      hapticFeedback('medium');
+    if (swipeDistance > 100 && chatInterface.style.display !== 'none') {
       showAvatarSelection();
+      hapticFeedback('medium');
     }
-  }, { passive: true });
-
-  // Prevent zoom on double tap
+  });
+  
+  // Prevent double-tap zoom
   let lastTouchEnd = 0;
   document.addEventListener('touchend', (e) => {
     const now = (new Date()).getTime();
@@ -157,129 +187,152 @@ function setupMobileGestures() {
   }, false);
 }
 
-// Mobile-specific optimizations
 function setupMobileOptimizations() {
   if (!isMobile) return;
-
-  // Add mobile-specific classes
-  document.body.classList.add('mobile-device');
   
-  // Optimize for mobile performance
+  // Register service worker for PWA
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
-      // Service worker registration failed, continue without it
-    });
+    navigator.serviceWorker.register('/sw.js').catch(console.error);
   }
-
-  // Handle mobile orientation changes
+  
+  // Handle orientation changes
   window.addEventListener('orientationchange', () => {
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 100);
   });
-
-  // Prevent pull-to-refresh on mobile
+  
+  // Prevent pull-to-refresh
   document.body.style.overscrollBehavior = 'none';
+  
+  // Optimize for mobile performance
+  document.body.style.webkitOverflowScrolling = 'touch';
 }
 
-// Enhanced error handling for mobile
 function showMobileError(message) {
-  hapticFeedback('error');
-  statusEl.textContent = message;
-  statusEl.style.color = '#ef4444';
-  
-  setTimeout(() => {
-    statusEl.textContent = '';
-    statusEl.style.color = '';
-  }, 3000);
+  if (isMobile) {
+    showNotification(message, 'error');
+    hapticFeedback('error');
+  } else {
+    console.error(message);
+  }
 }
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', () => {
-  initializeApp();
-  setupEventListeners();
+function initializeApp() {
+  // Hide loading screen after a short delay
+  setTimeout(() => {
+    loadingScreen.classList.add('hidden');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 300);
+  }, 1000);
+  
+  // Initialize speech synthesis
+  if ('speechSynthesis' in window) {
+    const voices = speechSynthesis.getVoices();
+    maleVoice = voices.find(voice => 
+      voice.name.includes('David') || 
+      voice.name.includes('UK English Male') ||
+      voice.name.includes('Male')
+    ) || voices[0];
+  }
+  
+  // Initialize speech recognition
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    initRecognition();
+  } else {
+    showMobileError('Speech recognition not supported in this browser');
+  }
+  
+  // Setup mobile optimizations
+  setupMobileOptimizations();
+  setupMobileGestures();
+  
+  // Load saved theme and avatar
   loadTheme();
   loadLastAvatar();
-  setupMobileGestures();
-  setupMobileOptimizations();
-});
-
-function initializeApp() {
-  // Initialize speech synthesis voices
-  window.speechSynthesis.onvoiceschanged = () => {
-    const voices = window.speechSynthesis.getVoices();
-    maleVoice = voices.find(v => 
-      v.lang.includes('en') && 
-      (v.name.includes('David') || v.name.includes('Male') || v.name.includes('UK'))
-    ) || voices.find(v => v.lang.includes('en'));
-  };
-
-  // Initialize speech recognition
-  initRecognition();
+  
+  // Setup event listeners
+  setupEventListeners();
+  
+  // Show online status
+  if (navigator.onLine) {
+    showNotification('Connected and ready!', 'success');
+  }
 }
 
 function setupEventListeners() {
-  // Avatar selection
+  // Avatar card selection
   avatarCards.forEach(card => {
     card.addEventListener('click', () => {
       const avatarType = card.dataset.avatar;
-      hapticFeedback('medium');
       selectAvatar(avatarType);
+      hapticFeedback('medium');
     });
     
-    // Mobile touch feedback
-    if (isMobile) {
-      card.addEventListener('touchstart', () => {
-        card.style.transform = 'scale(0.95)';
-      }, { passive: true });
-      
-      card.addEventListener('touchend', () => {
-        card.style.transform = '';
-      }, { passive: true });
-    }
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const avatarType = card.dataset.avatar;
+        selectAvatar(avatarType);
+        hapticFeedback('medium');
+      }
+    });
   });
-
+  
   // Back button
   backBtn.addEventListener('click', () => {
-    hapticFeedback('light');
     showAvatarSelection();
+    hapticFeedback('light');
   });
-
+  
   // Theme toggle
   themeToggle.addEventListener('click', () => {
-    hapticFeedback('light');
     toggleTheme();
+    hapticFeedback('light');
   });
-
-  // Talk button
+  
+  // Voice control buttons
   talkBtn.addEventListener('click', () => {
-    hapticFeedback('medium');
     if (!isListening) {
       startListening();
-    } else {
-      stopListening();
+      hapticFeedback('medium');
     }
   });
-
-  // Stop button
+  
   stopBtn.addEventListener('click', () => {
-    hapticFeedback('medium');
-    stopListening();
-    stopSpeech();
+    if (isListening) {
+      stopListening();
+      hapticFeedback('light');
+    }
+    if (isSpeaking) {
+      stopSpeech();
+      hapticFeedback('light');
+    }
   });
-
-  // Mobile-specific button enhancements
-  if (isMobile) {
-    [talkBtn, stopBtn, backBtn, themeToggle].forEach(btn => {
-      btn.addEventListener('touchstart', () => {
-        btn.style.transform = 'scale(0.95)';
-      }, { passive: true });
-      
-      btn.addEventListener('touchend', () => {
-        btn.style.transform = '';
-      }, { passive: true });
-    });
-  }
+  
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && chatInterface.style.display !== 'none') {
+      showAvatarSelection();
+    }
+    if (e.key === ' ' && e.target === document.body) {
+      e.preventDefault();
+      if (talkBtn && !talkBtn.disabled) {
+        talkBtn.click();
+      }
+    }
+  });
+  
+  // Online/offline detection
+  window.addEventListener('online', () => {
+    showNotification('Connection restored!', 'success');
+  });
+  
+  window.addEventListener('offline', () => {
+    showNotification('Connection lost. Some features may not work.', 'error');
+  });
 }
 
 function selectAvatar(avatarType) {
@@ -287,124 +340,123 @@ function selectAvatar(avatarType) {
     showMobileError('Invalid avatar selected');
     return;
   }
-
+  
   currentAvatar = avatarType;
   const config = AVATAR_CONFIG[avatarType];
   
   // Update UI
   avatarName.textContent = config.name;
   avatarImage.src = config.image;
+  avatarImage.alt = config.name;
   
   // Store selection
   localStorage.setItem('lastAvatar', avatarType);
   
-  // Show chat interface with mobile animation
+  // Show chat interface
   showChatInterface();
   
-  // Mobile success feedback
-  hapticFeedback('success');
+  // Welcome message
+  const welcomeMessage = `Hello! I'm your ${config.name}. I specialize in ${config.domain.toLowerCase()}. How can I help you today?`;
+  responseBox.textContent = welcomeMessage;
   
-  // Update status
-  statusEl.textContent = `Selected ${config.name} - ${config.domain}`;
-  setTimeout(() => {
-    statusEl.textContent = 'Tap "Talk" to start voice interaction';
-  }, 2000);
+  // Speak welcome message
+  speakText(welcomeMessage);
+  
+  // Enable controls
+  talkBtn.disabled = false;
+  stopBtn.disabled = false;
+  
+  showNotification(`Selected ${config.name}`, 'success');
 }
 
 function showChatInterface() {
   avatarSelection.style.display = 'none';
   chatInterface.style.display = 'flex';
   
-  // Mobile-specific animation
-  if (isMobile) {
-    chatInterface.style.animation = 'slideInUp 0.3s ease-out';
-  }
-  
-  // Start avatar animations
-  startAvatarAnimations();
-  
-  // Enable controls
-  talkBtn.disabled = false;
-  stopBtn.disabled = false;
+  // Focus management for accessibility
+  setTimeout(() => {
+    talkBtn.focus();
+  }, 100);
 }
 
 function showAvatarSelection() {
   chatInterface.style.display = 'none';
-  avatarSelection.style.display = 'block';
+  avatarSelection.style.display = 'flex';
   
-  // Stop animations and speech
-  stopAvatarAnimations();
-  stopSpeech();
-  stopListening();
+  // Stop any ongoing speech/listening
+  if (isListening) stopListening();
+  if (isSpeaking) stopSpeech();
   
-  // Disable controls
+  // Reset UI
+  responseBox.textContent = 'Select an avatar to start your conversation...';
+  statusEl.textContent = '';
   talkBtn.disabled = true;
   stopBtn.disabled = true;
   
-  // Clear response
-  responseBox.textContent = 'Select an avatar to start your conversation...';
-  statusEl.textContent = '';
+  // Focus management
+  setTimeout(() => {
+    const firstCard = document.querySelector('.avatar-card');
+    if (firstCard) firstCard.focus();
+  }, 100);
 }
 
 function initRecognition() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    showMobileError('Speech Recognition not supported in this browser');
-    return;
-  }
-
   recognition = new SpeechRecognition();
-  recognition.lang = 'en-US';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
+  
   recognition.continuous = false;
-
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+  
   recognition.onstart = () => {
     isListening = true;
     statusEl.textContent = 'Listening...';
     talkBtn.disabled = true;
     stopBtn.disabled = false;
-    avatarAnimation.classList.add('listening');
     hapticFeedback('medium');
+    
+    if (isMobile) {
+      showNotification('Listening...', 'info');
+    }
   };
-
+  
   recognition.onresult = async (event) => {
-    const transcript = event.results[0][0].transcript;
-    responseBox.textContent = `You said: ${transcript}`;
+    const message = event.results[0][0].transcript;
     statusEl.textContent = 'Processing...';
-    hapticFeedback('light');
     
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          message: transcript,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: message,
           avatar: currentAvatar,
           systemPrompt: AVATAR_CONFIG[currentAvatar].systemPrompt
         })
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
-      if (data.reply) {
-        processReply(data.reply);
-        hapticFeedback('success');
-      } else {
-        throw new Error('No reply received');
-      }
+      processReply(data.reply);
+      
     } catch (error) {
       console.error('API Error:', error);
-      showMobileError('Connection error. Please try again.');
-      processReply('I apologize, but I cannot connect to my knowledge base right now. Please try again later.');
+      showMobileError('Failed to get response. Please try again.');
+      statusEl.textContent = 'Error occurred';
     }
   };
-
+  
   recognition.onerror = (event) => {
     console.error('Speech recognition error:', event.error);
+    isListening = false;
+    statusEl.textContent = 'Error: ' + event.error;
+    talkBtn.disabled = false;
+    stopBtn.disabled = true;
     
     let errorMessage = 'Speech recognition error';
     switch (event.error) {
@@ -412,7 +464,7 @@ function initRecognition() {
         errorMessage = 'No speech detected. Please try again.';
         break;
       case 'audio-capture':
-        errorMessage = 'Microphone not found. Please check your device.';
+        errorMessage = 'Microphone not found. Please check your microphone.';
         break;
       case 'not-allowed':
         errorMessage = 'Microphone access denied. Please allow microphone access.';
@@ -420,326 +472,260 @@ function initRecognition() {
       case 'network':
         errorMessage = 'Network error. Please check your connection.';
         break;
-      default:
-        errorMessage = `Error: ${event.error}`;
     }
     
     showMobileError(errorMessage);
-    cleanup();
   };
-
+  
   recognition.onend = () => {
     isListening = false;
-    avatarAnimation.classList.remove('listening');
-    if (!isSpeaking) {
-      talkBtn.disabled = false;
-      stopBtn.disabled = true;
-    }
+    statusEl.textContent = '';
+    talkBtn.disabled = false;
+    stopBtn.disabled = true;
   };
 }
 
 function processReply(reply) {
-  // Detect code blocks
-  const codeMatch = reply.match(/```([\s\S]*?)```/);
-  const qaMatch = reply.match(/\*\*(.*?)\*\*([\s\S]*)/);
+  responseBox.textContent = reply;
   
+  // Check for code blocks
+  const codeMatch = reply.match(/```([\s\S]*?)```/g);
   if (codeMatch) {
-    const code = codeMatch[1].trim();
-    showSnippet(code);
-    responseBox.textContent = reply.replace(codeMatch[0], '').trim();
-  } else if (qaMatch) {
-    showQA(qaMatch[1].trim(), qaMatch[2].trim());
-    responseBox.textContent = '';
-  } else {
-    responseBox.textContent = reply;
+    codeMatch.forEach(code => {
+      const cleanCode = code.replace(/```/g, '').trim();
+      showSnippet(cleanCode);
+    });
   }
   
-  speakText(responseBox.textContent || reply);
+  // Check for Q&A format
+  const qaMatch = reply.match(/\*\*(.*?)\*\*[\s\S]*?Answer:?\s*(.*)/i);
+  if (qaMatch) {
+    showQA(qaMatch[1], qaMatch[2]);
+  }
+  
+  // Speak the reply
+  speakText(reply);
 }
 
 function showSnippet(code) {
-  chatSidebar.innerHTML = `
-    <h3>Code Snippet</h3>
-    <div class="snippet">${code}</div>
+  const snippetDiv = document.createElement('div');
+  snippetDiv.className = 'snippet';
+  snippetDiv.innerHTML = `
+    <h4>Code Snippet</h4>
+    <pre>${code}</pre>
     <button class="copy-btn" onclick="copyToClipboard('${code.replace(/'/g, "\\'")}')">
-      📋 Copy Code
+      Copy Code
     </button>
   `;
+  chatSidebar.appendChild(snippetDiv);
   chatSidebar.classList.add('active');
-  
-  // Mobile haptic feedback for code snippet
-  if (isMobile) {
-    hapticFeedback('light');
-  }
 }
 
 function showQA(question, answer) {
-  chatSidebar.innerHTML = `
-    <h3>Q & A</h3>
-    <div class="qa">
-      <strong>${question}</strong><br>
-      ${answer}
-    </div>
+  const qaDiv = document.createElement('div');
+  qaDiv.className = 'qa';
+  qaDiv.innerHTML = `
+    <strong>${question}</strong>
+    <p>${answer}</p>
   `;
+  chatSidebar.appendChild(qaDiv);
   chatSidebar.classList.add('active');
-  
-  // Mobile haptic feedback for Q&A
-  if (isMobile) {
-    hapticFeedback('light');
-  }
 }
 
 function speakText(text) {
-  if (!text || isSpeaking) return;
+  if (!('speechSynthesis' in window)) {
+    showMobileError('Speech synthesis not supported');
+    return;
+  }
   
   // Stop any existing speech
-  window.speechSynthesis.cancel();
+  if (isSpeaking) {
+    speechSynthesis.cancel();
+  }
   
   utterance = new SpeechSynthesisUtterance(text);
   
-  // Configure voice
+  // Set voice
   if (maleVoice) {
     utterance.voice = maleVoice;
   }
   
-  // Mobile-optimized speech settings
-  utterance.rate = isMobile ? 0.9 : 1.0;
-  utterance.pitch = 1.0;
+  // Configure speech parameters
+  utterance.rate = 0.9;
+  utterance.pitch = 0.8;
   utterance.volume = 1.0;
   
+  // Start speaking animation
+  isSpeaking = true;
+  startAvatarAnimations();
+  
   utterance.onstart = () => {
-    isSpeaking = true;
     statusEl.textContent = 'Speaking...';
-    avatarAnimation.classList.add('speaking');
     hapticFeedback('light');
   };
   
   utterance.onend = () => {
     isSpeaking = false;
-    statusEl.textContent = 'Ready to listen';
-    avatarAnimation.classList.remove('speaking');
-    
-    if (!isListening) {
-      talkBtn.disabled = false;
-      stopBtn.disabled = true;
-    }
+    statusEl.textContent = '';
+    stopAvatarAnimations();
+    hapticFeedback('success');
   };
   
   utterance.onerror = (event) => {
     console.error('Speech synthesis error:', event.error);
     isSpeaking = false;
-    avatarAnimation.classList.remove('speaking');
+    statusEl.textContent = 'Speech error';
+    stopAvatarAnimations();
     showMobileError('Speech synthesis error');
-    
-    if (!isListening) {
-      talkBtn.disabled = false;
-      stopBtn.disabled = true;
-    }
   };
   
-  window.speechSynthesis.speak(utterance);
+  speechSynthesis.speak(utterance);
 }
 
 function stopSpeech() {
-  window.speechSynthesis.cancel();
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+  }
   isSpeaking = false;
-  avatarAnimation.classList.remove('speaking');
-  hapticFeedback('light');
+  statusEl.textContent = '';
+  stopAvatarAnimations();
 }
 
 function startListening() {
-  if (isListening || isSpeaking) return;
-  
-  try {
+  if (recognition && !isListening) {
     recognition.start();
-  } catch (error) {
-    console.error('Failed to start recognition:', error);
-    showMobileError('Failed to start voice recognition');
   }
 }
 
 function stopListening() {
-  if (!isListening) return;
-  
-  try {
+  if (recognition && isListening) {
     recognition.stop();
-  } catch (error) {
-    console.error('Failed to stop recognition:', error);
   }
 }
 
 function cleanup() {
-  isListening = false;
-  avatarAnimation.classList.remove('listening');
-  talkBtn.disabled = false;
-  stopBtn.disabled = true;
+  if (recognition) {
+    recognition.stop();
+  }
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+  }
+  clearInterval(blinkInterval);
+  clearInterval(speakInterval);
 }
 
-// Avatar Animations
 function startAvatarAnimations() {
   // Blinking animation
   blinkInterval = setInterval(() => {
     avatarAnimation.classList.add('blinking');
     setTimeout(() => {
       avatarAnimation.classList.remove('blinking');
-    }, 200);
+    }, 300);
   }, 3000);
+  
+  // Speaking animation
+  avatarAnimation.classList.add('speaking');
 }
 
 function stopAvatarAnimations() {
-  if (blinkInterval) {
-    clearInterval(blinkInterval);
-    blinkInterval = null;
-  }
-  avatarAnimation.classList.remove('blinking', 'speaking', 'listening');
+  clearInterval(blinkInterval);
+  clearInterval(speakInterval);
+  avatarAnimation.classList.remove('speaking');
 }
 
-// Theme Management
 function toggleTheme() {
-  const body = document.body;
-  const isDark = body.classList.contains('dark-theme');
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   
-  if (isDark) {
-    body.classList.remove('dark-theme');
-    localStorage.setItem('theme', 'light');
-    themeToggle.textContent = '🌙';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update theme toggle button
+  const sunIcon = themeToggle.querySelector('.sun-icon');
+  const moonIcon = themeToggle.querySelector('.moon-icon');
+  
+  if (newTheme === 'dark') {
+    sunIcon.style.opacity = '0';
+    moonIcon.style.opacity = '1';
   } else {
-    body.classList.add('dark-theme');
-    localStorage.setItem('theme', 'dark');
-    themeToggle.textContent = '☀️';
+    sunIcon.style.opacity = '1';
+    moonIcon.style.opacity = '0';
   }
-  
-  // Mobile haptic feedback for theme change
-  hapticFeedback('light');
 }
 
 function loadTheme() {
-  const savedTheme = localStorage.getItem('theme');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  
+  // Update theme toggle button
+  const sunIcon = themeToggle.querySelector('.sun-icon');
+  const moonIcon = themeToggle.querySelector('.moon-icon');
+  
   if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-    themeToggle.textContent = '☀️';
+    sunIcon.style.opacity = '0';
+    moonIcon.style.opacity = '1';
+  } else {
+    sunIcon.style.opacity = '1';
+    moonIcon.style.opacity = '0';
   }
 }
 
 function loadLastAvatar() {
   const lastAvatar = localStorage.getItem('lastAvatar');
   if (lastAvatar && AVATAR_CONFIG[lastAvatar]) {
-    // Auto-select the last used avatar with mobile delay
-    setTimeout(() => {
-      selectAvatar(lastAvatar);
-    }, isMobile ? 1500 : 1000);
+    // Don't auto-select, just store for reference
+    currentAvatar = lastAvatar;
   }
 }
 
-// Utility Functions
 function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const copyBtn = document.querySelector('.copy-btn');
-    const originalText = copyBtn.textContent;
-    copyBtn.textContent = '✅ Copied!';
-    copyBtn.classList.add('success');
-    
-    // Mobile haptic feedback for copy
-    hapticFeedback('success');
-    
-    setTimeout(() => {
-      copyBtn.textContent = originalText;
-      copyBtn.classList.remove('success');
-    }, 2000);
-  }).catch(err => {
-    console.error('Failed to copy text:', err);
-    showMobileError('Failed to copy to clipboard');
-  });
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      showNotification('Copied to clipboard!', 'success');
+      hapticFeedback('success');
+    }).catch(() => {
+      showNotification('Failed to copy', 'error');
+    });
+  } else {
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showNotification('Copied to clipboard!', 'success');
+      hapticFeedback('success');
+    } catch (err) {
+      showNotification('Failed to copy', 'error');
+    }
+    document.body.removeChild(textArea);
+  }
 }
 
-// Test sound function with mobile enhancements
 function testSound() {
-  if (isSpeaking || isListening) {
-    showMobileError('Please wait for current operation to complete');
-    return;
-  }
-  
-  hapticFeedback('medium');
-  
-  const testMessage = "Hello! This is a test of the voice system. The AI Avatar Assistant is working correctly.";
-  
-  // Show test status
-  statusEl.textContent = 'Testing voice system...';
+  const testMessage = "Hello! This is a test of the AI Avatar Assistant. The voice system is working correctly.";
   responseBox.textContent = testMessage;
-  
-  // Speak test message
-  const testUtterance = new SpeechSynthesisUtterance(testMessage);
-  
-  if (maleVoice) {
-    testUtterance.voice = maleVoice;
-  }
-  
-  // Mobile-optimized test settings
-  testUtterance.rate = isMobile ? 0.9 : 1.0;
-  testUtterance.pitch = 1.0;
-  testUtterance.volume = 1.0;
-  
-  testUtterance.onstart = () => {
-    statusEl.textContent = 'Playing test sound...';
-    avatarAnimation.classList.add('speaking');
-  };
-  
-  testUtterance.onend = () => {
-    statusEl.textContent = 'Test completed successfully!';
-    avatarAnimation.classList.remove('speaking');
-    hapticFeedback('success');
-    
-    setTimeout(() => {
-      statusEl.textContent = 'Ready to listen';
-      responseBox.textContent = 'Select an avatar to start your conversation...';
-    }, 2000);
-  };
-  
-  testUtterance.onerror = (event) => {
-    console.error('Test speech error:', event.error);
-    statusEl.textContent = 'Test failed - check audio settings';
-    avatarAnimation.classList.remove('speaking');
-    showMobileError('Audio test failed');
-  };
-  
-  window.speechSynthesis.speak(testUtterance);
+  speakText(testMessage);
+  showNotification('Testing audio output...', 'info');
 }
 
-// Mobile-specific utility functions
+// Global function for test button
+window.testSound = testSound;
+
+// Initialize app when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeApp);
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', cleanup);
+
+// Handle online/offline status
 function isOnline() {
   return navigator.onLine;
 }
 
 function showOfflineMessage() {
   if (!isOnline()) {
-    showMobileError('You are offline. Please check your internet connection.');
+    showNotification('You are offline. Some features may not work.', 'error');
   }
-}
-
-// Add online/offline event listeners for mobile
-if (isMobile) {
-  window.addEventListener('online', () => {
-    hapticFeedback('success');
-    statusEl.textContent = 'Connection restored';
-    setTimeout(() => {
-      statusEl.textContent = '';
-    }, 2000);
-  });
-  
-  window.addEventListener('offline', () => {
-    hapticFeedback('error');
-    showMobileError('Connection lost. Please check your internet connection.');
-  });
-}
-
-// Handle page visibility changes
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    cleanup();
-  }
-});
-
-// Handle beforeunload
-window.addEventListener('beforeunload', () => {
-  cleanup();
-}); 
+} 

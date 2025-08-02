@@ -21,127 +21,210 @@
   <link rel="preload" href="style.css" as="style" />
   <link rel="preload" href="main.js" as="script" />
   
+  <!-- Google Fonts for better typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <title>AI Avatar Assistant</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
-    <!-- Avatar Selection Screen -->
-    <div class="avatar-selection" id="avatarSelection">
-      <h1>🎭 Choose Your AI Avatar</h1>
-      <p class="subtitle">Select an avatar to start your conversation</p>
-      
-      <div class="avatar-grid">
-        <div class="avatar-card" data-avatar="computer-teacher">
-          <img src="assets/avatars/computer-teacher.png" alt="Computer Teacher" />
-          <h3>Computer Teacher</h3>
-          <p>Programming & Technology</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="english-teacher">
-          <img src="assets/avatars/english-teacher.png" alt="English Teacher" />
-          <h3>English Teacher</h3>
-          <p>Language & Literature</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="biology-teacher">
-          <img src="assets/avatars/biology-teacher.png" alt="Biology Teacher" />
-          <h3>Biology Teacher</h3>
-          <p>Life Sciences</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="physics-teacher">
-          <img src="assets/avatars/physics-teacher.png" alt="Physics Teacher" />
-          <h3>Physics Teacher</h3>
-          <p>Physical Sciences</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="chemistry-teacher">
-          <img src="assets/avatars/chemistry-teacher.png" alt="Chemistry Teacher" />
-          <h3>Chemistry Teacher</h3>
-          <p>Chemical Sciences</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="geography-teacher">
-          <img src="assets/avatars/geography-teacher.png" alt="Geography Teacher" />
-          <h3>Geography Teacher</h3>
-          <p>Earth & Environment</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="hindi-teacher">
-          <img src="assets/avatars/hindi-teacher.png" alt="Hindi Teacher" />
-          <h3>Hindi Teacher</h3>
-          <p>Hindi Language</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="mathematics-teacher">
-          <img src="assets/avatars/mathematics-teacher.png" alt="Mathematics Teacher" />
-          <h3>Mathematics Teacher</h3>
-          <p>Math & Logic</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="doctor">
-          <img src="assets/avatars/doctor.png" alt="Doctor" />
-          <h3>Doctor</h3>
-          <p>Health & Medicine</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="engineer">
-          <img src="assets/avatars/engineer.png" alt="Engineer" />
-          <h3>Engineer</h3>
-          <p>Engineering & Design</p>
-        </div>
-        
-        <div class="avatar-card" data-avatar="lawyer">
-          <img src="assets/avatars/lawyer.png" alt="Lawyer" />
-          <h3>Lawyer</h3>
-          <p>Legal & Law</p>
-        </div>
-      </div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-spinner"></div>
+      <p>Loading AI Avatar Assistant...</p>
     </div>
 
-    <!-- Chat Interface -->
-    <div class="chat-interface" id="chatInterface" style="display: none;">
-      <div class="chat-header">
-        <button class="back-btn" id="backBtn">← Back</button>
-        <h2 id="avatarName">AI Avatar</h2>
-        <button class="theme-toggle" id="themeToggle">🌙</button>
-      </div>
+    <!-- Avatar Selection Screen -->
+    <main class="avatar-selection" id="avatarSelection">
+      <header class="selection-header">
+        <h1>🎭 Choose Your AI Avatar</h1>
+        <p class="subtitle">Select an avatar to start your conversation</p>
+      </header>
       
-      <div class="chat-container">
+      <section class="avatar-grid" role="grid" aria-label="Avatar selection grid">
+        <article class="avatar-card" data-avatar="computer-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/computer-teacher.png" alt="Computer Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Computer Teacher</h3>
+            <p>Programming & Technology</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="english-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/english-teacher.png" alt="English Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>English Teacher</h3>
+            <p>Language & Literature</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="biology-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/biology-teacher.png" alt="Biology Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Biology Teacher</h3>
+            <p>Life Sciences</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="physics-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/physics-teacher.png" alt="Physics Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Physics Teacher</h3>
+            <p>Physical Sciences</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="chemistry-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/chemistry-teacher.png" alt="Chemistry Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Chemistry Teacher</h3>
+            <p>Chemical Sciences</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="geography-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/geography-teacher.png" alt="Geography Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Geography Teacher</h3>
+            <p>Earth & Environment</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="hindi-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/hindi-teacher.png" alt="Hindi Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Hindi Teacher</h3>
+            <p>Hindi Language</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="mathematics-teacher" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/mathematics-teacher.png" alt="Mathematics Teacher" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Mathematics Teacher</h3>
+            <p>Math & Logic</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="doctor" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/doctor.png" alt="Doctor" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Doctor</h3>
+            <p>Health & Medicine</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="engineer" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/engineer.png" alt="Engineer" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Engineer</h3>
+            <p>Engineering & Design</p>
+          </div>
+        </article>
+        
+        <article class="avatar-card" data-avatar="lawyer" role="gridcell" tabindex="0">
+          <div class="avatar-image-container">
+            <img src="assets/avatars/lawyer.png" alt="Lawyer" loading="lazy" />
+          </div>
+          <div class="avatar-info">
+            <h3>Lawyer</h3>
+            <p>Legal & Law</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- Chat Interface -->
+    <main class="chat-interface" id="chatInterface" style="display: none;">
+      <header class="chat-header">
+        <button class="back-btn" id="backBtn" aria-label="Go back to avatar selection">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back
+        </button>
+        <h2 id="avatarName">AI Avatar</h2>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </header>
+      
+      <section class="chat-container">
         <div class="avatar-display">
           <div class="avatar-animation" id="avatarAnimation">
-            <img id="avatarImage" src="" alt="Avatar" />
+            <img id="avatarImage" src="" alt="Selected Avatar" />
             <div class="avatar-eyes" id="avatarEyes"></div>
             <div class="avatar-mouth" id="avatarMouth"></div>
           </div>
         </div>
         
         <div class="response-area">
-          <div id="responseBox">Select an avatar to start your conversation...</div>
-          <div id="status"></div>
+          <div id="responseBox" role="status" aria-live="polite">
+            Select an avatar to start your conversation...
+          </div>
+          <div id="status" role="status" aria-live="polite"></div>
         </div>
         
-        <div class="controls">
-          <button id="talkBtn" disabled>
-            <img src="https://img.icons8.com/ios-filled/24/ffffff/microphone.png" alt="Talk" />
+        <div class="controls" role="group" aria-label="Voice controls">
+          <button id="talkBtn" disabled aria-label="Start voice recognition">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
             Talk
           </button>
-          <button id="stopBtn" disabled>
-            <img src="https://img.icons8.com/ios-filled/24/ffffff/stop.png" alt="Stop" />
+          <button id="stopBtn" disabled aria-label="Stop voice recognition">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="6" y="6" width="12" height="12"/>
+            </svg>
             Stop
           </button>
-          <button id="testBtn" onclick="testSound()">
-            <img src="https://img.icons8.com/ios-filled/24/ffffff/speaker.png" alt="Test" />
+          <button id="testBtn" onclick="testSound()" aria-label="Test audio output">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
             Test
           </button>
         </div>
-      </div>
+      </section>
       
-      <div class="chat-sidebar" id="chatSidebar">
+      <aside class="chat-sidebar" id="chatSidebar" aria-label="Chat history and snippets">
         <!-- Code snippets and Q&A will appear here -->
-      </div>
-    </div>
+      </aside>
+    </main>
   </div>
 
   <script src="main.js"></script>

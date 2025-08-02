@@ -1,6 +1,5 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import OpenAI from 'openai';
 
 // Load once at cold start from the project root api/ folder
 let SYSTEM_PROMPT_TEMPLATE;
@@ -34,6 +33,16 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Try to use OpenAI with Gemini base URL
+    let OpenAI;
+    try {
+      const openaiModule = await import('openai');
+      OpenAI = openaiModule.default;
+    } catch (importError) {
+      console.error('Failed to import OpenAI:', importError);
+      throw new Error('OpenAI module not available');
+    }
+    
     // Initialize OpenAI client only when API key is available
     const openai = new OpenAI({
       apiKey: process.env.GEMINI_API_KEY,
