@@ -8,8 +8,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="AI Avatar Assistant" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="description" content="Mobile-first AI Avatar Assistant with voice interaction and multiple avatars" />
-  <meta name="keywords" content="AI, avatar, voice assistant, mobile, education" />
+  <meta name="description" content="Multi-avatar AI assistant platform designed by Susanto Ganguly (Sir Ganguly) with voice interaction and multiple subject teachers" />
+  <meta name="keywords" content="AI, avatar, voice assistant, mobile, education, Sir Ganguly, Susanto Ganguly" />
   <meta name="author" content="Susanto Ganguly" />
   
   <!-- PWA Icons -->
@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <title>AI Avatar Assistant</title>
+  <title>AI Avatar Assistant - Created by Sir Ganguly</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -35,6 +35,7 @@
     <div class="loading-screen" id="loadingScreen">
       <div class="loading-spinner"></div>
       <p>Loading AI Avatar Assistant...</p>
+      <p class="creator-credit">Created by Susanto Ganguly (Sir Ganguly)</p>
     </div>
 
     <!-- Avatar Selection Screen -->
@@ -42,6 +43,7 @@
       <header class="selection-header">
         <h1>🎭 Choose Your AI Avatar</h1>
         <p class="subtitle">Select an avatar to start your conversation</p>
+        <p class="creator-info">Designed by <strong>Susanto Ganguly</strong> (Sir Ganguly)</p>
       </header>
       
       <section class="avatar-grid" role="grid" aria-label="Avatar selection grid">
@@ -177,7 +179,10 @@
           </svg>
           Back
         </button>
-        <h2 id="avatarName">AI Avatar</h2>
+        <div class="avatar-info-header">
+          <h2 id="avatarName">AI Avatar</h2>
+          <p id="avatarDomain">Subject Domain</p>
+        </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
           <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"/>
@@ -197,13 +202,54 @@
             <div class="avatar-eyes" id="avatarEyes"></div>
             <div class="avatar-mouth" id="avatarMouth"></div>
           </div>
+          <div class="avatar-introduction" id="avatarIntroduction">
+            <!-- Avatar introduction will be displayed here -->
+          </div>
         </div>
         
-        <div class="response-area">
-          <div id="responseBox" role="status" aria-live="polite">
-            Select an avatar to start your conversation...
+        <div class="qa-container">
+          <div class="question-box">
+            <div class="box-header">
+              <h3>Your Question</h3>
+              <button class="copy-btn" id="copyQuestionBtn" aria-label="Copy question">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div id="questionBox" class="content-box">
+              Ask me a question using voice or type here...
+            </div>
           </div>
-          <div id="status" role="status" aria-live="polite"></div>
+          
+          <div class="answer-box">
+            <div class="box-header">
+              <h3>Avatar's Answer</h3>
+              <button class="copy-btn" id="copyAnswerBtn" aria-label="Copy answer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div id="answerBox" class="content-box">
+              Select an avatar to start your conversation...
+            </div>
+          </div>
+        </div>
+        
+        <div class="voice-input-area">
+          <div class="input-container">
+            <input type="text" id="textInput" placeholder="Type your question here..." class="text-input" />
+            <button id="sendBtn" class="send-btn" aria-label="Send message">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+              </svg>
+            </button>
+          </div>
         </div>
         
         <div class="controls" role="group" aria-label="Voice controls">
@@ -231,6 +277,8 @@
             Test
           </button>
         </div>
+        
+        <div id="status" class="status-indicator" role="status" aria-live="polite"></div>
       </section>
       
       <aside class="chat-sidebar" id="chatSidebar" aria-label="Chat history and snippets">

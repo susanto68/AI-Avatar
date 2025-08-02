@@ -10,7 +10,56 @@ try {
   ).trim();
 } catch (error) {
   console.error('Error loading system prompt template:', error);
-  SYSTEM_PROMPT_TEMPLATE = "You are a helpful AI assistant. Provide clear, educational responses.";
+  SYSTEM_PROMPT_TEMPLATE = "You are a helpful AI assistant created by Susanto Ganguly (Sir Ganguly). Provide clear, educational responses.";
+}
+
+// Input validation and filtering
+function validateInput(input) {
+  const offensiveWords = [
+    'bad', 'stupid', 'idiot', 'dumb', 'hate', 'terrible', 'awful', 'horrible',
+    'useless', 'worthless', 'kill', 'die', 'death', 'suicide', 'abuse', 'abusive',
+    'fuck', 'shit', 'bitch', 'ass', 'damn', 'hell', 'crap', 'piss'
+  ];
+  
+  const lowerInput = input.toLowerCase();
+  
+  // Check for offensive words
+  for (const word of offensiveWords) {
+    if (lowerInput.includes(word)) {
+      return false;
+    }
+  }
+  
+  // Check for excessive negativity
+  const negativeWords = ['no', 'not', 'never', 'can\'t', 'won\'t', 'don\'t', 'doesn\'t'];
+  const negativeCount = negativeWords.filter(word => lowerInput.includes(word)).length;
+  
+  if (negativeCount > 3) {
+    return false;
+  }
+  
+  return true;
+}
+
+function isDomainQuestion(question, avatarType) {
+  const domainKeywords = {
+    'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework'],
+    'english-teacher': ['grammar', 'english', 'language', 'writing', 'literature', 'poetry', 'essay', 'vocabulary', 'sentence', 'paragraph', 'story', 'novel', 'poem'],
+    'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
+    'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
+    'chemistry-teacher': ['chemistry', 'chemical', 'molecule', 'atom', 'reaction', 'compound', 'element', 'acid', 'base', 'solution', 'mixture', 'organic', 'inorganic'],
+    'geography-teacher': ['geography', 'map', 'country', 'continent', 'ocean', 'mountain', 'river', 'climate', 'weather', 'population', 'culture', 'environment'],
+    'hindi-teacher': ['hindi', 'हिंदी', 'व्याकरण', 'साहित्य', 'कविता', 'कहानी', 'निबंध', 'शब्द', 'वाक्य', 'परिच्छेद'],
+    'mathematics-teacher': ['math', 'mathematics', 'algebra', 'geometry', 'calculus', 'equation', 'formula', 'number', 'calculation', 'problem', 'solve', 'statistics'],
+    'doctor': ['health', 'medical', 'disease', 'symptom', 'treatment', 'medicine', 'doctor', 'patient', 'hospital', 'body', 'organ', 'surgery'],
+    'engineer': ['engineering', 'design', 'build', 'construct', 'mechanical', 'electrical', 'civil', 'software', 'system', 'project', 'technical'],
+    'lawyer': ['law', 'legal', 'court', 'justice', 'right', 'contract', 'agreement', 'lawyer', 'attorney', 'case', 'legal advice', 'regulation']
+  };
+  
+  const keywords = domainKeywords[avatarType] || [];
+  const lowerQuestion = question.toLowerCase();
+  
+  return keywords.some(keyword => lowerQuestion.includes(keyword));
 }
 
 export default async function handler(req, res) {
@@ -22,6 +71,20 @@ export default async function handler(req, res) {
   
   if (!message) {
     return res.status(400).json({ error: 'No message provided' });
+  }
+
+  // Validate input
+  if (!validateInput(message)) {
+    return res.status(200).json({ 
+      reply: "I'm here to help positively. Please ask constructive questions only." 
+    });
+  }
+
+  // Check if question is in avatar's domain
+  if (!isDomainQuestion(message, avatar)) {
+    return res.status(200).json({ 
+      reply: "Please choose the correct subject avatar to get this answer." 
+    });
   }
 
   // Check if Gemini API key is available
@@ -76,77 +139,77 @@ export default async function handler(req, res) {
 function getMockResponses(avatarType) {
   const responses = {
     'computer-teacher': [
-      "Great question! As a computer science teacher, I'd be happy to help you with programming concepts. What specific topic would you like to explore?",
-      "Excellent! Programming is all about problem-solving. Let me explain this concept in a way that's easy to understand.",
-      "That's a wonderful programming question! Let me break this down step by step for you.",
-      "As your computer science teacher, I'm here to guide you through this programming challenge. What would you like to learn?"
+      "Great question! As a computer science teacher created by Susanto Ganguly (Sir Ganguly), I'd be happy to help you with programming concepts. What specific topic would you like to explore?",
+      "Excellent! Programming is all about problem-solving. Let me explain this concept in a way that's easy to understand, as designed by Sir Ganguly.",
+      "That's a wonderful programming question! Let me break this down step by step for you, following the teaching methods developed by Susanto Ganguly.",
+      "As your computer science teacher, created by Sir Ganguly, I'm here to guide you through this programming challenge. What would you like to learn?"
     ],
     'english-teacher': [
-      "What an interesting language question! Let me help you understand this English concept better.",
-      "Great writing question! Here's how we can improve your language skills.",
-      "That's a wonderful literary analysis question. Let me share some insights with you.",
-      "As your English teacher, I'm here to help you master the language. What would you like to explore?"
+      "What an interesting language question! Let me help you understand this English concept better, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great writing question! Here's how we can improve your language skills, following the methods developed by Sir Ganguly.",
+      "That's a wonderful literary analysis question. Let me share some insights with you, as created by Susanto Ganguly.",
+      "As your English teacher, created by Sir Ganguly, I'm here to help you master the language. What would you like to explore?"
     ],
     'biology-teacher': [
-      "Fascinating biology question! Let me explain this life science concept in simple terms.",
-      "That's a great question about living organisms! Here's what you need to know.",
-      "Excellent biology inquiry! Let me break down this biological process for you.",
-      "As your biology teacher, I'm excited to help you understand life sciences. What interests you?"
+      "Fascinating biology question! Let me explain this life science concept in simple terms, as designed by Susanto Ganguly (Sir Ganguly).",
+      "That's a great question about living organisms! Here's what you need to know, following the teaching methods of Sir Ganguly.",
+      "Excellent biology inquiry! Let me break down this biological process for you, as created by Susanto Ganguly.",
+      "As your biology teacher, created by Sir Ganguly, I'm excited to help you understand life sciences. What interests you?"
     ],
     'physics-teacher': [
-      "That's an excellent physics question! Let me explain this physical concept clearly.",
-      "Great question about the laws of nature! Here's how physics explains this phenomenon.",
-      "Wonderful physics inquiry! Let me demonstrate this concept with practical examples.",
-      "As your physics teacher, I'm here to help you understand the physical world. What would you like to explore?"
+      "That's an excellent physics question! Let me explain this physical concept clearly, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great question about the laws of nature! Here's how physics explains this phenomenon, following Sir Ganguly's teaching methods.",
+      "Wonderful physics inquiry! Let me demonstrate this concept with practical examples, as created by Susanto Ganguly.",
+      "As your physics teacher, created by Sir Ganguly, I'm here to help you understand the physical world. What would you like to explore?"
     ],
     'chemistry-teacher': [
-      "That's a fascinating chemistry question! Let me explain this chemical concept step by step.",
-      "Great question about chemical reactions! Here's what's happening at the molecular level.",
-      "Excellent chemistry inquiry! Let me show you how this chemical process works.",
-      "As your chemistry teacher, I'm excited to help you understand chemical sciences. What interests you?"
+      "That's a fascinating chemistry question! Let me explain this chemical concept step by step, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great question about chemical reactions! Here's what's happening at the molecular level, following Sir Ganguly's methods.",
+      "Excellent chemistry inquiry! Let me show you how this chemical process works, as created by Susanto Ganguly.",
+      "As your chemistry teacher, created by Sir Ganguly, I'm excited to help you understand chemical sciences. What interests you?"
     ],
     'geography-teacher': [
-      "That's an interesting geography question! Let me help you understand this Earth science concept.",
-      "Great question about our planet! Here's what geography tells us about this topic.",
-      "Wonderful geography inquiry! Let me explain this environmental concept clearly.",
-      "As your geography teacher, I'm here to help you explore our world. What would you like to learn?"
+      "That's an interesting geography question! Let me help you understand this Earth science concept, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great question about our planet! Here's what geography tells us about this topic, following Sir Ganguly's teaching methods.",
+      "Wonderful geography inquiry! Let me explain this environmental concept clearly, as created by Susanto Ganguly.",
+      "As your geography teacher, created by Sir Ganguly, I'm here to help you explore our world. What would you like to learn?"
     ],
     'hindi-teacher': [
-      "बहुत अच्छा प्रश्न! मैं आपकी हिंदी भाषा में मदद करने के लिए यहाँ हूँ।",
-      "हिंदी भाषा के बारे में यह एक शानदार सवाल है! मुझे आपकी मदद करने में खुशी होगी।",
-      "यह एक बेहतरीन हिंदी प्रश्न है! आइए इसे सरल तरीके से समझते हैं।",
-      "मैं आपकी हिंदी शिक्षिका हूँ और आपकी भाषा सीखने में मदद करने के लिए तैयार हूँ।"
+      "बहुत अच्छा प्रश्न! मैं आपकी हिंदी भाषा में मदद करने के लिए यहाँ हूँ, जैसा कि सुशांतों गांगुली (सर गांगुली) ने डिज़ाइन किया है।",
+      "हिंदी भाषा के बारे में यह एक शानदार सवाल है! मुझे आपकी मदद करने में खुशी होगी, सर गांगुली के तरीकों का पालन करते हुए।",
+      "यह एक बेहतरीन हिंदी प्रश्न है! आइए इसे सरल तरीके से समझते हैं, जैसा कि सुशांतों गांगुली ने बनाया है।",
+      "मैं आपकी हिंदी शिक्षिका हूँ, जिसे सर गांगुली ने बनाया है, और आपकी भाषा सीखने में मदद करने के लिए तैयार हूँ।"
     ],
     'mathematics-teacher': [
-      "That's an excellent math question! Let me help you solve this step by step.",
-      "Great mathematical thinking! Here's how we can approach this problem.",
-      "Wonderful math inquiry! Let me break down this mathematical concept clearly.",
-      "As your mathematics teacher, I'm here to help you master mathematical concepts. What would you like to explore?"
+      "That's an excellent math question! Let me help you solve this step by step, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great mathematical thinking! Here's how we can approach this problem, following Sir Ganguly's teaching methods.",
+      "Wonderful math inquiry! Let me break down this mathematical concept clearly, as created by Susanto Ganguly.",
+      "As your mathematics teacher, created by Sir Ganguly, I'm here to help you master mathematical concepts. What would you like to explore?"
     ],
     'doctor': [
-      "That's an important health question! Let me provide some general information about this topic.",
-      "Great health inquiry! Here's what you should know about this medical concept.",
-      "That's a thoughtful health question. Let me explain this in simple terms.",
-      "As a medical professional, I'm here to provide general health information. Remember to consult healthcare providers for specific medical advice."
+      "That's an important health question! Let me provide some general information about this topic, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great health inquiry! Here's what you should know about this medical concept, following Sir Ganguly's methods.",
+      "That's a thoughtful health question. Let me explain this in simple terms, as created by Susanto Ganguly.",
+      "As a medical professional, created by Sir Ganguly, I'm here to provide general health information. Remember to consult healthcare providers for specific medical advice."
     ],
     'engineer': [
-      "That's an excellent engineering question! Let me explain this technical concept clearly.",
-      "Great engineering inquiry! Here's how we can approach this technical challenge.",
-      "Wonderful engineering question! Let me break down this technical process for you.",
-      "As an engineer, I'm here to help you understand technical concepts and problem-solving approaches."
+      "That's an excellent engineering question! Let me explain this technical concept clearly, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great engineering inquiry! Here's how we can approach this technical challenge, following Sir Ganguly's methods.",
+      "Wonderful engineering question! Let me break down this technical process for you, as created by Susanto Ganguly.",
+      "As an engineer, created by Sir Ganguly, I'm here to help you understand technical concepts and problem-solving approaches."
     ],
     'lawyer': [
-      "That's an interesting legal question! Let me provide some general information about this legal concept.",
-      "Great legal inquiry! Here's what you should know about this legal principle.",
-      "That's a thoughtful legal question. Let me explain this legal concept in simple terms.",
-      "As a legal professional, I'm here to provide general legal information. Remember to consult qualified legal professionals for specific legal advice."
+      "That's an interesting legal question! Let me provide some general information about this legal concept, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great legal inquiry! Here's what you should know about this legal principle, following Sir Ganguly's methods.",
+      "That's a thoughtful legal question. Let me explain this legal concept in simple terms, as created by Susanto Ganguly.",
+      "As a legal professional, created by Sir Ganguly, I'm here to provide general legal information. Remember to consult qualified legal professionals for specific legal advice."
     ]
   };
 
   return responses[avatarType] || [
-    "Hello! I'm here to help you learn and explore. What would you like to discuss?",
-    "Great question! Let me help you understand this topic better.",
-    "That's an interesting question! Here's what I can tell you about this.",
-    "I'm here to assist you with your learning journey. What would you like to explore?"
+    "Hello! I'm here to help you learn and explore, as designed by Susanto Ganguly (Sir Ganguly). What would you like to discuss?",
+    "Great question! Let me help you understand this topic better, following Sir Ganguly's teaching methods.",
+    "That's an interesting question! Here's what I can tell you about this, as created by Susanto Ganguly.",
+    "I'm here to assist you with your learning journey, as designed by Sir Ganguly. What would you like to explore?"
   ];
 } 

@@ -1,62 +1,65 @@
-# 🎭 AI Avatar Assistant
+# 🎭 AI Avatar Assistant - Created by Sir Ganguly
 
-A modern, mobile-first AI Avatar Assistant with voice interaction, multiple specialized avatars, and beautiful responsive design. Built with Node.js, Express, and modern web technologies.
-
-![AI Avatar Assistant](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
-![Mobile First](https://img.shields.io/badge/Mobile-First%20Design-blue)
-![Voice AI](https://img.shields.io/badge/Voice-AI%20Powered-orange)
-![Vercel Ready](https://img.shields.io/badge/Deploy-Vercel%20Ready-purple)
+A multi-avatar AI assistant platform designed by **Susanto Ganguly** (also known as **Sir Ganguly**) that provides interactive learning experiences through voice and text interactions with subject-specific teacher avatars.
 
 ## ✨ Features
 
-### 🎯 Core Features
-- **Multi-Avatar Selection**: Choose from 11 specialized AI avatars
-- **Voice Interaction**: Natural speech recognition and synthesis
-- **Mobile-First Design**: Optimized for all devices and screen sizes
-- **Dark/Light Theme**: Toggle between themes with smooth transitions
-- **Real-time Animations**: Avatar animations during speech and interactions
-- **Offline Support**: Graceful fallback when API is unavailable
+### 🧑‍🏫 **Avatar Introduction & Attribution**
+- Each avatar introduces itself as created by Susanto Ganguly (Sir Ganguly)
+- Specialized introductions for each subject area
+- Hindi teacher responds in Hindi language
+- Professional and friendly teaching personas
 
-### 🎭 Available Avatars
-- **Computer Teacher** - Programming & Technology
-- **English Teacher** - Language & Literature  
-- **Biology Teacher** - Life Sciences
-- **Physics Teacher** - Physical Sciences
-- **Chemistry Teacher** - Chemical Sciences
-- **Geography Teacher** - Earth & Environment
-- **Hindi Teacher** - Hindi Language
-- **Mathematics Teacher** - Math & Logic
-- **Doctor** - Health & Medicine
-- **Engineer** - Engineering & Design
-- **Lawyer** - Legal & Law
+### 🎙️ **Voice Input & Output**
+- **Voice Recognition**: Accept user voice input with real-time transcription
+- **Voice Synthesis**: Clear, positive tone speech output
+- **Special Character Filtering**: Skips reading special characters like `*`, `?`, `#`, etc.
+- **Hindi Voice Support**: Hindi teacher uses Hindi language for both input and output
 
-### 📱 Mobile Optimizations
-- Touch-friendly interface with haptic feedback
-- Gesture controls (swipe to navigate)
-- Optimized performance for mobile devices
-- PWA-ready with service worker support
-- Responsive design for all screen sizes
+### 📚 **Subject-Specific Avatars**
+- **Computer Teacher**: Programming, algorithms, data structures, technology
+- **English Teacher**: Grammar, literature, writing, communication skills
+- **Biology Teacher**: Life sciences, anatomy, genetics, ecology
+- **Physics Teacher**: Mechanics, thermodynamics, electromagnetism, modern physics
+- **Chemistry Teacher**: Organic chemistry, inorganic chemistry, chemical reactions
+- **Geography Teacher**: Physical geography, human geography, environmental science
+- **Hindi Teacher**: Hindi grammar, literature, poetry, cultural aspects
+- **Mathematics Teacher**: Algebra, geometry, calculus, mathematical reasoning
+- **Doctor**: General health information, medical concepts, wellness advice
+- **Engineer**: Various engineering disciplines, technical solutions
+- **Lawyer**: Legal concepts, general legal principles, educational information
 
-### 🎨 Modern UI/UX
-- Clean, elegant design with smooth animations
-- CSS custom properties for easy theming
-- Accessibility features (ARIA labels, keyboard navigation)
-- Modern typography with Inter font
-- Beautiful gradients and shadows
+### 🖼️ **Modern UI/UX**
+- **Two Output Windows**: Separate question and answer boxes with copy functionality
+- **Mobile-First Design**: Responsive layout optimized for mobile and desktop
+- **Avatar Grid Display**: Visual selection of all available avatars
+- **Copy Buttons**: Easy copying of questions and answers
+- **Dark/Light Theme**: Toggle between themes for better user experience
+
+### 🛡️ **Content Validation**
+- **Offensive Content Filtering**: Blocks inappropriate or negative content
+- **Domain Validation**: Ensures questions match avatar's subject area
+- **Positive Reinforcement**: Encourages constructive and educational interactions
+- **Professional Responses**: Maintains educational focus and appropriate tone
+
+### 🌐 **Deployment Ready**
+- **Vercel Support**: Optimized for Vercel deployment
+- **Render/Replit/Cyclic.sh**: Easy deployment to various platforms
+- **Environment Variables**: Secure API key management
+- **PWA Features**: Progressive Web App capabilities
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- Modern web browser with speech recognition support
+- Node.js 16.0.0 or higher
+- Gemini API key (optional - works with mock responses)
 
-### Local Development
+### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/susanto68/AI-Avatar.git
-   cd AI-Avatar
+   git clone <repository-url>
+   cd Avatar
    ```
 
 2. **Install dependencies**
@@ -64,229 +67,161 @@ A modern, mobile-first AI Avatar Assistant with voice interaction, multiple spec
    npm install
    ```
 
-3. **Set up environment variables** (optional)
-   Create a `.env` file in the root directory:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   NODE_ENV=development
+3. **Set up environment variables**
+   ```bash
+   # Create .env file
+   echo "GEMINI_API_KEY=your_gemini_api_key_here" > .env
    ```
 
 4. **Start the development server**
    ```bash
-   npm start
+   npm run dev
    ```
 
 5. **Open your browser**
-   Navigate to `http://localhost:3000`
+   ```
+   http://localhost:3000
+   ```
 
-### Environment Variables
+## 🎯 Usage Guide
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `GEMINI_API_KEY` | Google Gemini API key for AI responses | No | Uses mock responses |
-| `NODE_ENV` | Environment mode | No | `development` |
-| `PORT` | Server port | No | `3000` |
+### Selecting an Avatar
+1. Browse the avatar grid on the main screen
+2. Click on your desired subject teacher
+3. Each avatar will introduce itself as created by Sir Ganguly
+4. The interface will switch to the chat mode
 
-## 🎯 Usage
+### Asking Questions
+- **Voice Input**: Click the "Talk" button and speak your question
+- **Text Input**: Type your question in the text field and press Enter or click Send
+- **Domain Validation**: Questions are automatically validated against the avatar's subject area
 
-### Basic Usage
-1. **Select an Avatar**: Choose from the grid of available avatars
-2. **Start Conversation**: Click the "Talk" button to begin voice interaction
-3. **Speak Naturally**: Ask questions or start a conversation
-4. **Listen to Response**: The avatar will respond with voice and text
-5. **Switch Avatars**: Use the back button to choose a different avatar
+### Features
+- **Copy Functionality**: Use copy buttons to save questions and answers
+- **Theme Toggle**: Switch between light and dark themes
+- **Voice Test**: Test the audio system with the "Test" button
+- **Back Navigation**: Return to avatar selection anytime
 
-### Voice Commands
-- **Talk Button**: Start voice recognition
-- **Stop Button**: Stop listening or speaking
-- **Test Button**: Test the audio system
-- **Spacebar**: Quick start voice recognition (when focused)
-
-### Keyboard Shortcuts
-- `Escape`: Go back to avatar selection
-- `Spacebar`: Start voice recognition
-- `Enter/Space`: Select avatar (when focused)
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **HTML5**: Semantic markup with accessibility features
-- **CSS3**: Modern styling with CSS custom properties
-- **JavaScript (ES6+)**: Vanilla JS with modern features
-- **Web Speech API**: Speech recognition and synthesis
-- **PWA**: Progressive Web App capabilities
-
-### Backend
-- **Node.js**: Server runtime
-- **Express.js**: Web framework
-- **OpenAI SDK**: AI integration (with Gemini base URL)
-- **ES Modules**: Modern JavaScript modules
-
-### Deployment
-- **Vercel**: Serverless deployment platform
-- **GitHub**: Version control and CI/CD
-
-## 📁 Project Structure
+## 🏗️ Project Structure
 
 ```
 Avatar/
+├── index.html              # Main HTML file
+├── style.css               # Comprehensive CSS styles
+├── main.js                 # Frontend JavaScript logic
+├── server.js               # Express server setup
+├── package.json            # Dependencies and scripts
+├── vercel.json             # Vercel deployment config
 ├── api/
-│   ├── chat.js          # AI API handler
-│   └── system_prompt.txt # Default system prompt
+│   ├── chat.js             # API endpoint for AI responses
+│   └── system_prompt.txt   # AI system prompt template
 ├── assets/
-│   └── avatars/         # Avatar images
-├── index.html           # Main HTML file
-├── style.css            # Modern CSS styles
-├── main.js              # Frontend JavaScript
-├── server.js            # Express server
-├── package.json         # Dependencies and scripts
-├── vercel.json          # Vercel configuration
-├── .gitignore           # Git ignore rules
-└── README.md            # Project documentation
+│   └── avatars/            # Avatar PNG images
+│       ├── computer-teacher.png
+│       ├── english-teacher.png
+│       ├── biology-teacher.png
+│       ├── physics-teacher.png
+│       ├── chemistry-teacher.png
+│       ├── geography-teacher.png
+│       ├── hindi-teacher.png
+│       ├── mathematics-teacher.png
+│       ├── doctor.png
+│       ├── engineer.png
+│       └── lawyer.png
+└── README.md               # This file
 ```
-
-## 🚀 Deployment
-
-### Vercel Deployment
-
-1. **Connect to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Select the `Avatar` directory
-
-2. **Configure Environment Variables**
-   - In Vercel dashboard, go to Project Settings
-   - Add `GEMINI_API_KEY` with your API key
-   - Set `NODE_ENV` to `production`
-
-3. **Deploy**
-   - Vercel will automatically deploy on push to main branch
-   - Your app will be available at `https://your-project.vercel.app`
-
-### Manual Deployment
-
-1. **Build the project**
-   ```bash
-   npm run build
-   ```
-
-2. **Deploy to your preferred platform**
-   - The project is ready for any Node.js hosting platform
-   - Ensure environment variables are configured
 
 ## 🔧 Configuration
 
-### Customizing Avatars
+### Environment Variables
+- `GEMINI_API_KEY`: Your Gemini API key for AI responses
+- `NODE_ENV`: Environment (development/production)
+- `PORT`: Server port (default: 3000)
 
-Edit the `AVATAR_CONFIG` object in `main.js`:
+### API Configuration
+The app uses the Gemini API through OpenAI-compatible endpoints:
+- Base URL: `https://generativelanguage.googleapis.com/v1beta/openai`
+- Model: `gemini-2.5-flash`
+- Temperature: 0.6
+- Max Tokens: 1100
 
-```javascript
-const AVATAR_CONFIG = {
-  'your-avatar': {
-    name: 'Your Avatar Name',
-    image: 'assets/avatars/your-avatar.png',
-    systemPrompt: 'Your custom system prompt...',
-    domain: 'Your Domain'
-  }
-};
-```
+## 🎨 Customization
 
-### Styling Customization
+### Adding New Avatars
+1. Add avatar image to `assets/avatars/`
+2. Update `AVATAR_CONFIG` in `main.js`
+3. Add domain keywords in `api/chat.js`
+4. Update HTML avatar grid
 
-The project uses CSS custom properties for easy theming. Edit `style.css`:
+### Styling
+- CSS variables for easy theming
+- Responsive design with mobile-first approach
+- Dark/light theme support
+- Custom animations and transitions
 
-```css
-:root {
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
-  /* Add more custom properties */
-}
-```
+## 🌐 Deployment
 
-## 🐛 Troubleshooting
+### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push
 
-### Common Issues
+### Other Platforms
+- **Render**: Use the Node.js environment
+- **Replit**: Import the repository and run `npm start`
+- **Cyclic.sh**: Connect repository and set environment variables
 
-**Speech Recognition Not Working**
-- Ensure you're using HTTPS (required for speech recognition)
-- Check microphone permissions in browser
-- Try refreshing the page
+## 🔒 Security Features
 
-**API Key Issues**
-- Verify your Gemini API key is correct
-- Check environment variables in Vercel dashboard
-- The app will use mock responses if no API key is provided
+- Input validation and sanitization
+- Offensive content filtering
+- Secure API key handling
+- CORS and security headers
+- Rate limiting considerations
 
-**Mobile Issues**
-- Ensure you're using a modern mobile browser
-- Check that microphone access is allowed
-- Try the PWA version for better mobile experience
+## 📱 Mobile Features
 
-### Browser Compatibility
-
-| Browser | Speech Recognition | Speech Synthesis | Status |
-|---------|-------------------|------------------|--------|
-| Chrome | ✅ | ✅ | Full Support |
-| Firefox | ✅ | ✅ | Full Support |
-| Safari | ✅ | ✅ | Full Support |
-| Edge | ✅ | ✅ | Full Support |
-| Mobile Chrome | ✅ | ✅ | Full Support |
-| Mobile Safari | ✅ | ✅ | Full Support |
+- Touch-optimized interface
+- Haptic feedback support
+- Swipe gestures for navigation
+- PWA capabilities
+- Offline functionality
+- Mobile-optimized voice recognition
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Guidelines
-- Follow the existing code style
-- Add comments for complex logic
-- Test on multiple devices and browsers
-- Ensure accessibility compliance
-- Update documentation as needed
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## 👨‍🏫 About the Creator
 
-- **Google Gemini API** for AI capabilities
-- **Web Speech API** for voice interaction
-- **Vercel** for deployment platform
-- **Inter Font** for beautiful typography
-- **Modern CSS** for responsive design
+**Susanto Ganguly** (Sir Ganguly) is the creator and designer of this AI Avatar Assistant platform. The system is designed to provide an engaging, educational experience for students across various subjects.
 
-## 📞 Support
+## 🆘 Support
 
-If you encounter any issues or have questions:
+For support or questions:
+- Check the documentation
+- Review the code comments
+- Create an issue on GitHub
+- Contact the development team
 
-1. Check the [Issues](https://github.com/susanto68/AI-Avatar/issues) page
-2. Create a new issue with detailed information
-3. Include browser version and device information
-
-## 🔄 Changelog
-
-### Version 2.0.0 (Current)
-- ✨ Complete UI/UX modernization
-- 📱 Mobile-first responsive design
-- 🎨 Modern CSS with custom properties
-- ♿ Enhanced accessibility features
-- 🚀 Vercel deployment optimization
-- 🔧 Improved error handling
-- 📱 PWA capabilities
+## 🔄 Updates
 
 ### Version 1.0.0
-- 🎭 Initial multi-avatar implementation
-- 🎤 Basic voice interaction
-- 📱 Mobile support
-- 🌙 Dark/light theme toggle
+- Initial release with 11 subject avatars
+- Voice input/output functionality
+- Mobile-first responsive design
+- Content validation and filtering
+- Sir Ganguly attribution throughout
+- Deployment-ready configuration
 
 ---
 
-**Made with ❤️ by Susanto Ganguly**
-
-*This project demonstrates modern web development practices with a focus on accessibility, performance, and user experience.* 
+**Created with ❤️ by Susanto Ganguly (Sir Ganguly)** 

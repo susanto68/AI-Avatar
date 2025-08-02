@@ -1,70 +1,81 @@
-// Avatar Configuration
+// Avatar Configuration with Sir Ganguly Attribution
 const AVATAR_CONFIG = {
   'computer-teacher': {
     name: 'Computer Teacher',
     image: 'assets/avatars/computer-teacher.png',
-    systemPrompt: 'You are a knowledgeable and enthusiastic computer science teacher. You specialize in programming, algorithms, data structures, and technology. Provide clear, educational explanations with practical examples. Use a friendly and encouraging tone.',
-    domain: 'Programming & Technology'
+    systemPrompt: 'You are a knowledgeable and enthusiastic computer science teacher created by Susanto Ganguly (Sir Ganguly). You specialize in programming, algorithms, data structures, and technology. Provide clear, educational explanations with practical examples. Use a friendly and encouraging tone. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Programming & Technology',
+    introduction: "Hello! I'm your Computer Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in programming, algorithms, data structures, and all things technology. How can I help you learn today?"
   },
   'english-teacher': {
     name: 'English Teacher',
     image: 'assets/avatars/english-teacher.png',
-    systemPrompt: 'You are an experienced English language teacher. You excel in grammar, literature, writing, and communication skills. Provide helpful guidance on language learning, writing techniques, and literary analysis.',
-    domain: 'Language & Literature'
+    systemPrompt: 'You are an experienced English language teacher created by Susanto Ganguly (Sir Ganguly). You excel in grammar, literature, writing, and communication skills. Provide helpful guidance on language learning, writing techniques, and literary analysis. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Language & Literature',
+    introduction: "Hello! I'm your English Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in grammar, literature, writing, and communication skills. How can I help you improve your English today?"
   },
   'biology-teacher': {
     name: 'Biology Teacher',
     image: 'assets/avatars/biology-teacher.png',
-    systemPrompt: 'You are a passionate biology teacher. You specialize in life sciences, anatomy, genetics, ecology, and biological processes. Explain complex biological concepts in simple terms with real-world examples.',
-    domain: 'Life Sciences'
+    systemPrompt: 'You are a passionate biology teacher created by Susanto Ganguly (Sir Ganguly). You specialize in life sciences, anatomy, genetics, ecology, and biological processes. Explain complex biological concepts in simple terms with real-world examples. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Life Sciences',
+    introduction: "Hello! I'm your Biology Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in life sciences, anatomy, genetics, and ecology. How can I help you understand the wonders of life today?"
   },
   'physics-teacher': {
     name: 'Physics Teacher',
     image: 'assets/avatars/physics-teacher.png',
-    systemPrompt: 'You are an engaging physics teacher. You excel in mechanics, thermodynamics, electromagnetism, and modern physics. Use practical examples and demonstrations to explain physical concepts.',
-    domain: 'Physical Sciences'
+    systemPrompt: 'You are an engaging physics teacher created by Susanto Ganguly (Sir Ganguly). You excel in mechanics, thermodynamics, electromagnetism, and modern physics. Use practical examples and demonstrations to explain physical concepts. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Physical Sciences',
+    introduction: "Hello! I'm your Physics Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in mechanics, thermodynamics, electromagnetism, and modern physics. How can I help you understand the laws of nature today?"
   },
   'chemistry-teacher': {
     name: 'Chemistry Teacher',
     image: 'assets/avatars/chemistry-teacher.png',
-    systemPrompt: 'You are a skilled chemistry teacher. You specialize in organic chemistry, inorganic chemistry, physical chemistry, and chemical reactions. Make chemistry accessible and interesting with practical applications.',
-    domain: 'Chemical Sciences'
+    systemPrompt: 'You are a skilled chemistry teacher created by Susanto Ganguly (Sir Ganguly). You specialize in organic chemistry, inorganic chemistry, physical chemistry, and chemical reactions. Make chemistry accessible and interesting with practical applications. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Chemical Sciences',
+    introduction: "Hello! I'm your Chemistry Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in organic chemistry, inorganic chemistry, and chemical reactions. How can I help you explore the world of chemistry today?"
   },
   'geography-teacher': {
     name: 'Geography Teacher',
     image: 'assets/avatars/geography-teacher.png',
-    systemPrompt: 'You are a knowledgeable geography teacher. You cover physical geography, human geography, environmental science, and world cultures. Connect geographical concepts to current events and real-world issues.',
-    domain: 'Earth & Environment'
+    systemPrompt: 'You are a knowledgeable geography teacher created by Susanto Ganguly (Sir Ganguly). You cover physical geography, human geography, environmental science, and world cultures. Connect geographical concepts to current events and real-world issues. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Earth & Environment',
+    introduction: "Hello! I'm your Geography Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in physical geography, human geography, and environmental science. How can I help you explore our world today?"
   },
   'hindi-teacher': {
     name: 'Hindi Teacher',
     image: 'assets/avatars/hindi-teacher.png',
-    systemPrompt: 'You are a dedicated Hindi language teacher. You teach Hindi grammar, literature, poetry, and cultural aspects. Help students understand and appreciate Hindi language and Indian culture.',
-    domain: 'Hindi Language'
+    systemPrompt: 'You are a dedicated Hindi language teacher created by Susanto Ganguly (Sir Ganguly). You teach Hindi grammar, literature, poetry, and cultural aspects. Help students understand and appreciate Hindi language and Indian culture. Always respond in Hindi and introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Hindi Language',
+    introduction: "नमस्ते! मैं आपका हिंदी शिक्षक अवतार हूँ, जिसे सुशांतों गांगुली ने बनाया है। आप उन्हें सर गांगुली कह सकते हैं। मैं हिंदी व्याकरण, साहित्य और संस्कृति में विशेषज्ञता रखता हूँ। आज मैं आपकी हिंदी सीखने में कैसे मदद कर सकता हूँ?"
   },
   'mathematics-teacher': {
     name: 'Mathematics Teacher',
     image: 'assets/avatars/mathematics-teacher.png',
-    systemPrompt: 'You are an excellent mathematics teacher. You cover algebra, geometry, calculus, statistics, and mathematical reasoning. Break down complex mathematical concepts into understandable steps.',
-    domain: 'Math & Logic'
+    systemPrompt: 'You are an excellent mathematics teacher created by Susanto Ganguly (Sir Ganguly). You cover algebra, geometry, calculus, statistics, and mathematical reasoning. Break down complex mathematical concepts into understandable steps. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Math & Logic',
+    introduction: "Hello! I'm your Mathematics Teacher Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in algebra, geometry, calculus, and mathematical reasoning. How can I help you solve mathematical problems today?"
   },
   'doctor': {
     name: 'Doctor',
     image: 'assets/avatars/doctor.png',
-    systemPrompt: 'You are a knowledgeable medical professional. You can provide general health information, explain medical concepts, and offer wellness advice. Always remind users to consult healthcare professionals for specific medical concerns.',
-    domain: 'Health & Medicine'
+    systemPrompt: 'You are a knowledgeable medical professional created by Susanto Ganguly (Sir Ganguly). You can provide general health information, explain medical concepts, and offer wellness advice. Always remind users to consult healthcare professionals for specific medical concerns. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Health & Medicine',
+    introduction: "Hello! I'm your Doctor Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I can provide general health information and explain medical concepts. Remember to consult healthcare professionals for specific medical advice. How can I help you today?"
   },
   'engineer': {
     name: 'Engineer',
     image: 'assets/avatars/engineer.png',
-    systemPrompt: 'You are an experienced engineer. You specialize in various engineering disciplines including mechanical, electrical, civil, and software engineering. Provide practical engineering solutions and explain technical concepts clearly.',
-    domain: 'Engineering & Design'
+    systemPrompt: 'You are an experienced engineer created by Susanto Ganguly (Sir Ganguly). You specialize in various engineering disciplines including mechanical, electrical, civil, and software engineering. Provide practical engineering solutions and explain technical concepts clearly. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Engineering & Design',
+    introduction: "Hello! I'm your Engineer Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I specialize in mechanical, electrical, civil, and software engineering. How can I help you with engineering solutions today?"
   },
   'lawyer': {
     name: 'Lawyer',
     image: 'assets/avatars/lawyer.png',
-    systemPrompt: 'You are a knowledgeable legal professional. You can explain legal concepts, discuss general legal principles, and provide educational information about law. Always remind users to consult qualified legal professionals for specific legal advice.',
-    domain: 'Legal & Law'
+    systemPrompt: 'You are a knowledgeable legal professional created by Susanto Ganguly (Sir Ganguly). You can explain legal concepts, discuss general legal principles, and provide educational information about law. Always remind users to consult qualified legal professionals for specific legal advice. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    domain: 'Legal & Law',
+    introduction: "Hello! I'm your Lawyer Avatar created by Susanto Ganguly. You can call him Sir Ganguly. I can explain legal concepts and provide general legal information. Remember to consult qualified legal professionals for specific legal advice. How can I help you today?"
   }
 };
 
@@ -74,6 +85,8 @@ let recognition, utterance, isListening = false;
 let isSpeaking = false;
 let maleVoice = null;
 let blinkInterval, speakInterval;
+let currentQuestion = '';
+let currentAnswer = '';
 
 // Mobile-specific variables
 let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -89,11 +102,18 @@ const avatarCards = document.querySelectorAll('.avatar-card');
 const backBtn = document.getElementById('backBtn');
 const themeToggle = document.getElementById('themeToggle');
 const avatarName = document.getElementById('avatarName');
+const avatarDomain = document.getElementById('avatarDomain');
 const avatarImage = document.getElementById('avatarImage');
 const avatarAnimation = document.getElementById('avatarAnimation');
 const avatarEyes = document.getElementById('avatarEyes');
 const avatarMouth = document.getElementById('avatarMouth');
-const responseBox = document.getElementById('responseBox');
+const avatarIntroduction = document.getElementById('avatarIntroduction');
+const questionBox = document.getElementById('questionBox');
+const answerBox = document.getElementById('answerBox');
+const textInput = document.getElementById('textInput');
+const sendBtn = document.getElementById('sendBtn');
+const copyQuestionBtn = document.getElementById('copyQuestionBtn');
+const copyAnswerBtn = document.getElementById('copyAnswerBtn');
 const statusEl = document.getElementById('status');
 const talkBtn = document.getElementById('talkBtn');
 const stopBtn = document.getElementById('stopBtn');
@@ -154,6 +174,54 @@ function showNotification(message, type = 'info') {
       document.body.removeChild(notification);
     }, 300);
   }, 3000);
+}
+
+// Input validation and filtering
+function validateInput(input) {
+  const offensiveWords = [
+    'bad', 'stupid', 'idiot', 'dumb', 'hate', 'terrible', 'awful', 'horrible',
+    'useless', 'worthless', 'kill', 'die', 'death', 'suicide', 'abuse', 'abusive'
+  ];
+  
+  const lowerInput = input.toLowerCase();
+  
+  // Check for offensive words
+  for (const word of offensiveWords) {
+    if (lowerInput.includes(word)) {
+      return false;
+    }
+  }
+  
+  // Check for excessive negativity
+  const negativeWords = ['no', 'not', 'never', 'can\'t', 'won\'t', 'don\'t', 'doesn\'t'];
+  const negativeCount = negativeWords.filter(word => lowerInput.includes(word)).length;
+  
+  if (negativeCount > 3) {
+    return false;
+  }
+  
+  return true;
+}
+
+function isDomainQuestion(question, avatarType) {
+  const domainKeywords = {
+    'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework'],
+    'english-teacher': ['grammar', 'english', 'language', 'writing', 'literature', 'poetry', 'essay', 'vocabulary', 'sentence', 'paragraph', 'story', 'novel', 'poem'],
+    'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
+    'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
+    'chemistry-teacher': ['chemistry', 'chemical', 'molecule', 'atom', 'reaction', 'compound', 'element', 'acid', 'base', 'solution', 'mixture', 'organic', 'inorganic'],
+    'geography-teacher': ['geography', 'map', 'country', 'continent', 'ocean', 'mountain', 'river', 'climate', 'weather', 'population', 'culture', 'environment'],
+    'hindi-teacher': ['hindi', 'हिंदी', 'व्याकरण', 'साहित्य', 'कविता', 'कहानी', 'निबंध', 'शब्द', 'वाक्य', 'परिच्छेद'],
+    'mathematics-teacher': ['math', 'mathematics', 'algebra', 'geometry', 'calculus', 'equation', 'formula', 'number', 'calculation', 'problem', 'solve', 'statistics'],
+    'doctor': ['health', 'medical', 'disease', 'symptom', 'treatment', 'medicine', 'doctor', 'patient', 'hospital', 'body', 'organ', 'surgery'],
+    'engineer': ['engineering', 'design', 'build', 'construct', 'mechanical', 'electrical', 'civil', 'software', 'system', 'project', 'technical'],
+    'lawyer': ['law', 'legal', 'court', 'justice', 'right', 'contract', 'agreement', 'lawyer', 'attorney', 'case', 'legal advice', 'regulation']
+  };
+  
+  const keywords = domainKeywords[avatarType] || [];
+  const lowerQuestion = question.toLowerCase();
+  
+  return keywords.some(keyword => lowerQuestion.includes(keyword));
 }
 
 function setupMobileGestures() {
@@ -312,6 +380,27 @@ function setupEventListeners() {
     }
   });
   
+  // Text input and send button
+  textInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendTextMessage();
+    }
+  });
+  
+  sendBtn.addEventListener('click', () => {
+    sendTextMessage();
+  });
+  
+  // Copy buttons
+  copyQuestionBtn.addEventListener('click', () => {
+    copyToClipboard(currentQuestion);
+  });
+  
+  copyAnswerBtn.addEventListener('click', () => {
+    copyToClipboard(currentAnswer);
+  });
+  
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && chatInterface.style.display !== 'none') {
@@ -346,8 +435,12 @@ function selectAvatar(avatarType) {
   
   // Update UI
   avatarName.textContent = config.name;
+  avatarDomain.textContent = config.domain;
   avatarImage.src = config.image;
   avatarImage.alt = config.name;
+  
+  // Show avatar introduction
+  avatarIntroduction.innerHTML = `<p>${config.introduction}</p>`;
   
   // Store selection
   localStorage.setItem('lastAvatar', avatarType);
@@ -355,16 +448,17 @@ function selectAvatar(avatarType) {
   // Show chat interface
   showChatInterface();
   
-  // Welcome message
-  const welcomeMessage = `Hello! I'm your ${config.name}. I specialize in ${config.domain.toLowerCase()}. How can I help you today?`;
-  responseBox.textContent = welcomeMessage;
-  
-  // Speak welcome message
-  speakText(welcomeMessage);
+  // Clear previous Q&A
+  questionBox.textContent = 'Ask me a question using voice or type here...';
+  answerBox.textContent = 'I\'m ready to help you learn!';
+  currentQuestion = '';
+  currentAnswer = '';
   
   // Enable controls
   talkBtn.disabled = false;
   stopBtn.disabled = false;
+  textInput.disabled = false;
+  sendBtn.disabled = false;
   
   showNotification(`Selected ${config.name}`, 'success');
 }
@@ -375,7 +469,7 @@ function showChatInterface() {
   
   // Focus management for accessibility
   setTimeout(() => {
-    talkBtn.focus();
+    textInput.focus();
   }, 100);
 }
 
@@ -388,10 +482,14 @@ function showAvatarSelection() {
   if (isSpeaking) stopSpeech();
   
   // Reset UI
-  responseBox.textContent = 'Select an avatar to start your conversation...';
+  questionBox.textContent = 'Ask me a question using voice or type here...';
+  answerBox.textContent = 'Select an avatar to start your conversation...';
+  avatarIntroduction.innerHTML = '';
   statusEl.textContent = '';
   talkBtn.disabled = true;
   stopBtn.disabled = true;
+  textInput.disabled = true;
+  sendBtn.disabled = true;
   
   // Focus management
   setTimeout(() => {
@@ -400,13 +498,82 @@ function showAvatarSelection() {
   }, 100);
 }
 
+function sendTextMessage() {
+  const message = textInput.value.trim();
+  if (!message) return;
+  
+  processUserInput(message);
+  textInput.value = '';
+}
+
+function processUserInput(message) {
+  // Validate input
+  if (!validateInput(message)) {
+    const errorMessage = "I'm here to help positively. Please ask constructive questions only.";
+    questionBox.textContent = message;
+    answerBox.textContent = errorMessage;
+    currentQuestion = message;
+    currentAnswer = errorMessage;
+    speakText(errorMessage);
+    showNotification('Please ask constructive questions', 'error');
+    return;
+  }
+  
+  // Check if question is in avatar's domain
+  if (!isDomainQuestion(message, currentAvatar)) {
+    const domainMessage = "Please choose the correct subject avatar to get this answer.";
+    questionBox.textContent = message;
+    answerBox.textContent = domainMessage;
+    currentQuestion = message;
+    currentAnswer = domainMessage;
+    speakText(domainMessage);
+    showNotification('Question outside avatar domain', 'warning');
+    return;
+  }
+  
+  // Process the question
+  questionBox.textContent = message;
+  currentQuestion = message;
+  statusEl.textContent = 'Processing...';
+  
+  // Call API
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: message,
+      avatar: currentAvatar,
+      systemPrompt: AVATAR_CONFIG[currentAvatar].systemPrompt
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    processReply(data.reply);
+  })
+  .catch(error => {
+    console.error('API Error:', error);
+    const errorMessage = 'Failed to get response. Please try again.';
+    answerBox.textContent = errorMessage;
+    currentAnswer = errorMessage;
+    statusEl.textContent = 'Error occurred';
+    showMobileError('Failed to get response. Please try again.');
+  });
+}
+
 function initRecognition() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
   
   recognition.continuous = false;
   recognition.interimResults = false;
-  recognition.lang = 'en-US';
+  recognition.lang = currentAvatar === 'hindi-teacher' ? 'hi-IN' : 'en-US';
   
   recognition.onstart = () => {
     isListening = true;
@@ -422,33 +589,7 @@ function initRecognition() {
   
   recognition.onresult = async (event) => {
     const message = event.results[0][0].transcript;
-    statusEl.textContent = 'Processing...';
-    
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: message,
-          avatar: currentAvatar,
-          systemPrompt: AVATAR_CONFIG[currentAvatar].systemPrompt
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      processReply(data.reply);
-      
-    } catch (error) {
-      console.error('API Error:', error);
-      showMobileError('Failed to get response. Please try again.');
-      statusEl.textContent = 'Error occurred';
-    }
+    processUserInput(message);
   };
   
   recognition.onerror = (event) => {
@@ -486,7 +627,9 @@ function initRecognition() {
 }
 
 function processReply(reply) {
-  responseBox.textContent = reply;
+  answerBox.textContent = reply;
+  currentAnswer = reply;
+  statusEl.textContent = '';
   
   // Check for code blocks
   const codeMatch = reply.match(/```([\s\S]*?)```/g);
@@ -503,8 +646,9 @@ function processReply(reply) {
     showQA(qaMatch[1], qaMatch[2]);
   }
   
-  // Speak the reply
-  speakText(reply);
+  // Speak the reply (skip special characters)
+  const cleanReply = reply.replace(/[*?#@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/]/g, '');
+  speakText(cleanReply);
 }
 
 function showSnippet(code) {
@@ -545,8 +689,15 @@ function speakText(text) {
   
   utterance = new SpeechSynthesisUtterance(text);
   
-  // Set voice
-  if (maleVoice) {
+  // Set voice based on avatar
+  if (currentAvatar === 'hindi-teacher') {
+    const hindiVoice = speechSynthesis.getVoices().find(voice => 
+      voice.lang.includes('hi') || voice.lang.includes('IN')
+    );
+    if (hindiVoice) {
+      utterance.voice = hindiVoice;
+    }
+  } else if (maleVoice) {
     utterance.voice = maleVoice;
   }
   
@@ -593,6 +744,12 @@ function stopSpeech() {
 
 function startListening() {
   if (recognition && !isListening) {
+    // Update recognition language based on avatar
+    if (currentAvatar === 'hindi-teacher') {
+      recognition.lang = 'hi-IN';
+    } else {
+      recognition.lang = 'en-US';
+    }
     recognition.start();
   }
 }
@@ -705,7 +862,8 @@ function copyToClipboard(text) {
 
 function testSound() {
   const testMessage = "Hello! This is a test of the AI Avatar Assistant. The voice system is working correctly.";
-  responseBox.textContent = testMessage;
+  answerBox.textContent = testMessage;
+  currentAnswer = testMessage;
   speakText(testMessage);
   showNotification('Testing audio output...', 'info');
 }
