@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="AI Avatar Assistant" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="description" content="Multi-avatar AI assistant platform designed by Susanto Ganguly (Sir Ganguly) with voice interaction and multiple subject teachers" />
+  <meta name="description" content="Colorful AI Avatar Assistant created by Susanto Ganguly (Sir Ganguly) with voice interaction and multiple subject teachers" />
   <meta name="keywords" content="AI, avatar, voice assistant, mobile, education, Sir Ganguly, Susanto Ganguly" />
   <meta name="author" content="Susanto Ganguly" />
   
@@ -24,7 +24,7 @@
   <!-- Google Fonts for better typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <title>AI Avatar Assistant - Created by Sir Ganguly</title>
   <link rel="stylesheet" href="style.css" />
@@ -202,58 +202,49 @@
             <div class="avatar-eyes" id="avatarEyes"></div>
             <div class="avatar-mouth" id="avatarMouth"></div>
           </div>
-          <div class="avatar-introduction" id="avatarIntroduction">
-            <!-- Avatar introduction will be displayed here -->
+        </div>
+        
+        <!-- Single Voice Window -->
+        <div class="voice-window" id="voiceWindow">
+          <div class="voice-content" id="voiceContent">
+            <p class="voice-placeholder">Click "Talk" to start your conversation...</p>
           </div>
         </div>
         
-        <div class="qa-container">
-          <div class="question-box">
-            <div class="box-header">
-              <h3>Your Question</h3>
+        <!-- Q/A Summary Window (shows when response > 20 words) -->
+        <div class="qa-summary" id="qaSummary" style="display: none;">
+          <div class="summary-header">
+            <h3>Q/A Summary</h3>
+          </div>
+          <div class="summary-content">
+            <div class="question-section">
+              <h4>Your Question</h4>
+              <div class="question-text" id="summaryQuestion"></div>
               <button class="copy-btn" id="copyQuestionBtn" aria-label="Copy question">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                 </svg>
-                Copy
+                Copy Question
               </button>
             </div>
-            <div id="questionBox" class="content-box">
-              Ask me a question using voice or type here...
-            </div>
-          </div>
-          
-          <div class="answer-box">
-            <div class="box-header">
-              <h3>Avatar's Answer</h3>
+            <div class="answer-section">
+              <h4>Avatar's Answer</h4>
+              <div class="answer-text" id="summaryAnswer"></div>
               <button class="copy-btn" id="copyAnswerBtn" aria-label="Copy answer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                 </svg>
-                Copy
+                Copy Answer
               </button>
             </div>
-            <div id="answerBox" class="content-box">
-              Select an avatar to start your conversation...
-            </div>
           </div>
         </div>
         
-        <div class="voice-input-area">
-          <div class="input-container">
-            <input type="text" id="textInput" placeholder="Type your question here..." class="text-input" />
-            <button id="sendBtn" class="send-btn" aria-label="Send message">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <div class="controls" role="group" aria-label="Voice controls">
-          <button id="talkBtn" disabled aria-label="Start voice recognition">
+        <!-- Voice Controls -->
+        <div class="voice-controls" role="group" aria-label="Voice controls">
+          <button id="talkBtn" class="control-btn talk-btn" aria-label="Start voice recognition">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
               <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -262,28 +253,22 @@
             </svg>
             Talk
           </button>
-          <button id="stopBtn" disabled aria-label="Stop voice recognition">
+          <button id="stopBtn" class="control-btn stop-btn" disabled aria-label="Stop voice recognition">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="6" y="6" width="12" height="12"/>
             </svg>
             Stop
           </button>
-          <button id="testBtn" onclick="testSound()" aria-label="Test audio output">
+          <button id="startBtn" class="control-btn start-btn" disabled aria-label="Resume last spoken answer">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              <polygon points="5 3 19 12 5 21 5 3"/>
             </svg>
-            Test
+            Start
           </button>
         </div>
         
         <div id="status" class="status-indicator" role="status" aria-live="polite"></div>
       </section>
-      
-      <aside class="chat-sidebar" id="chatSidebar" aria-label="Chat history and snippets">
-        <!-- Code snippets and Q&A will appear here -->
-      </aside>
     </main>
   </div>
 
