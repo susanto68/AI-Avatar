@@ -82,8 +82,26 @@ export default async function handler(req, res) {
 
   // Check if question is in avatar's domain
   if (!isDomainQuestion(message, avatar)) {
+    const domainKeywords = {
+      'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework'],
+      'english-teacher': ['grammar', 'english', 'language', 'writing', 'literature', 'poetry', 'essay', 'vocabulary', 'sentence', 'paragraph', 'story', 'novel', 'poem'],
+      'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
+      'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
+      'chemistry-teacher': ['chemistry', 'chemical', 'molecule', 'atom', 'reaction', 'compound', 'element', 'acid', 'base', 'solution', 'mixture', 'organic', 'inorganic'],
+      'geography-teacher': ['geography', 'map', 'country', 'continent', 'ocean', 'mountain', 'river', 'climate', 'weather', 'population', 'culture', 'environment'],
+      'hindi-teacher': ['hindi', 'हिंदी', 'व्याकरण', 'साहित्य', 'कविता', 'कहानी', 'निबंध', 'शब्द', 'वाक्य', 'परिच्छेद'],
+      'mathematics-teacher': ['math', 'mathematics', 'algebra', 'geometry', 'calculus', 'equation', 'formula', 'number', 'calculation', 'problem', 'solve', 'statistics'],
+      'doctor': ['health', 'medical', 'disease', 'symptom', 'treatment', 'medicine', 'doctor', 'patient', 'hospital', 'body', 'organ', 'surgery'],
+      'engineer': ['engineering', 'design', 'build', 'construct', 'mechanical', 'electrical', 'civil', 'software', 'system', 'project', 'technical'],
+      'lawyer': ['law', 'legal', 'court', 'justice', 'right', 'contract', 'agreement', 'lawyer', 'attorney', 'case', 'legal advice', 'regulation']
+    };
+    
+    const keywords = domainKeywords[avatar] || [];
+    const keywordList = keywords.slice(0, 5).join(', '); // Show first 5 keywords
+    const avatarName = avatar.replace('-teacher', ' teacher').replace('-', ' ');
+    
     return res.status(200).json({ 
-      reply: "Please choose the correct subject avatar to get this answer." 
+      reply: `I can teach you about ${keywordList}. Please ask me questions related to these topics!` 
     });
   }
 
