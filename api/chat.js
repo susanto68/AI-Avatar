@@ -81,11 +81,11 @@ export default async function handler(req, res) {
   }
 
   // Check if question is in avatar's domain
-  if (!isDomainQuestion(message, avatar)) {
-    return res.status(200).json({ 
-      reply: "Please choose the correct subject avatar to get this answer." 
-    });
-  }
+  // if (!isDomainQuestion(message, avatar)) {
+   // return res.status(200).json({ 
+     // reply: "Please choose the correct subject avatar to get this answer." 
+   // });
+ // }
 
   // Check if Gemini API key is available
   if (!process.env.GEMINI_API_KEY) {
