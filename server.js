@@ -7,7 +7,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json({ limit: '10mb' }));
@@ -22,11 +21,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files (HTML, CSS, JS, images)
+// Serve static files with proper MIME types and caching
 app.use(express.static(path.join(__dirname), {
   maxAge: '1h',
   etag: true,
-  lastModified: true
+  lastModified: true,
+  setHeaders: (res, path) => {
+    // Set proper cache headers for images
+    if (path.endsWith('.png') || path.endsWith('.jpg') || path.endsWith('.jpeg') || path.endsWith('.gif') || path.endsWith('.webp')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+    // Set proper cache headers for CSS and JS
+    if (path.endsWith('.css') || path.endsWith('.js')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }
 }));
 
 // Health check endpoint
@@ -60,11 +70,18 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 AI Avatar Server running at http://localhost:${PORT}`);
-  console.log(`📱 Mobile-first AI Avatar Assistant ready!`);
-  console.log(`🎭 Multiple avatars available for selection`);
-  console.log(`🎤 Voice recognition and speech synthesis enabled`);
-  console.log(`🔐 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔑 API Key configured: ${process.env.GEMINI_API_KEY ? 'Yes' : 'No (using mock responses)'}`);
-}); 
+// Export for Vercel serverless deployment
+export default app;
+
+// For local development - check if we're not in Vercel environment
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`🚀 AI Avatar Server running at http://localhost:${PORT}`);
+    console.log(`📱 Mobile-first AI Avatar Assistant ready!`);
+    console.log(`🎭 Multiple avatars available for selection`);
+    console.log(`🎤 Voice recognition and speech synthesis enabled`);
+    console.log(`🔐 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🔑 API Key configured: ${process.env.GEMINI_API_KEY ? 'Yes' : 'No (using mock responses)'}`);
+  });
+} 
