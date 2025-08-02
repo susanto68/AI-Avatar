@@ -14,7 +14,11 @@
       "use": "@vercel/static"
     },
     {
-      "src": "*.js",
+      "src": "main.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "sw.js",
       "use": "@vercel/static"
     },
     {
@@ -25,6 +29,10 @@
   "routes": [
     {
       "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/health",
       "dest": "/server.js"
     },
     {
