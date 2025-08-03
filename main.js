@@ -637,7 +637,25 @@ function speakText(text) {
     speechSynthesis.cancel();
   }
   
-  utterance = new SpeechSynthesisUtterance(text);
+  // Clean text for speech and add natural pauses for better clarity
+  const cleanText = text
+    .replace(/[#?\"'`~!@$%^&*()_+\-=\[\]{}|\\:;<>\/]/g, ' ') // Remove special characters
+    .replace(/\./g, ' . ') // Add pause before and after full stops
+    .replace(/[,\?!;:]/g, ' ') // Remove other punctuation
+    .replace(/\s+/g, ' ') // Remove extra spaces
+    .replace(/(\w+)/g, '$1 ') // Add space after each word for better articulation
+    .trim();
+  
+  // Split text by sentences for better pacing
+  const sentences = cleanText.split(' . ').filter(sentence => sentence.trim().length > 0);
+  
+  // If we have multiple sentences, speak them with pauses
+  if (sentences.length > 1) {
+    speakSentencesWithPauses(sentences);
+    return;
+  }
+  
+  utterance = new SpeechSynthesisUtterance(cleanText);
   
   // Set voice based on avatar
   if (currentAvatar === 'hindi-teacher') {
@@ -656,12 +674,6 @@ function speakText(text) {
   utterance.pitch = 0.7; // Deep voice
   utterance.volume = 1.0;
   
-  // Clean text for speech and add natural pauses for better clarity
-  const cleanText = text
-    .replace(/[.,?!;:]/g, ' ') // Remove punctuation
-    .replace(/\s+/g, ' ') // Remove extra spaces
-    .replace(/(\w+)/g, '$1 ') // Add space after each word for better articulation
-    .trim();
   utterance.text = cleanText;
   
   // Start speaking animation
@@ -689,6 +701,74 @@ function speakText(text) {
   };
   
   speechSynthesis.speak(utterance);
+}
+
+function speakSentencesWithPauses(sentences) {
+  let currentIndex = 0;
+  
+  function speakNextSentence() {
+    if (currentIndex >= sentences.length) {
+      // All sentences spoken
+      isSpeaking = false;
+      statusEl.textContent = '';
+      selectedAvatarImage.classList.remove('speaking');
+      hapticFeedback('success');
+      return;
+    }
+    
+    const sentence = sentences[currentIndex].trim();
+    if (sentence.length === 0) {
+      currentIndex++;
+      speakNextSentence();
+      return;
+    }
+    
+    const utterance = new SpeechSynthesisUtterance(sentence);
+    
+    // Set voice based on avatar
+    if (currentAvatar === 'hindi-teacher') {
+      const hindiVoice = speechSynthesis.getVoices().find(voice => 
+        voice.lang.includes('hi') || voice.lang.includes('IN')
+      );
+      if (hindiVoice) {
+        utterance.voice = hindiVoice;
+      }
+    } else if (maleVoice) {
+      utterance.voice = maleVoice;
+    }
+    
+    // Configure speech parameters for deep, calm male voice with slow and clear articulation
+    utterance.rate = 0.7; // Slow pace for clear articulation
+    utterance.pitch = 0.7; // Deep voice
+    utterance.volume = 1.0;
+    
+    utterance.onstart = () => {
+      if (currentIndex === 0) {
+        statusEl.textContent = 'Speaking...';
+        hapticFeedback('light');
+        isSpeaking = true;
+        selectedAvatarImage.classList.add('speaking');
+      }
+    };
+    
+    utterance.onend = () => {
+      currentIndex++;
+      // Add 1 second pause between sentences
+      setTimeout(speakNextSentence, 1000);
+    };
+    
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event.error);
+      isSpeaking = false;
+      statusEl.textContent = 'Speech error';
+      selectedAvatarImage.classList.remove('speaking');
+      showNotification('Speech synthesis error', 'error');
+    };
+    
+    speechSynthesis.speak(utterance);
+  }
+  
+  speakNextSentence();
 }
 
 function stopSpeech() {
