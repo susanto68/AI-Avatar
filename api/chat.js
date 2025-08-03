@@ -48,6 +48,7 @@ function isDomainQuestion(question, avatarType) {
     'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
     'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
     'chemistry-teacher': ['chemistry', 'chemical', 'molecule', 'atom', 'reaction', 'compound', 'element', 'acid', 'base', 'solution', 'mixture', 'organic', 'inorganic'],
+    'history-teacher': ['history', 'historical', 'ancient', 'civilization', 'empire', 'war', 'battle', 'kingdom', 'dynasty', 'revolution', 'independence', 'culture', 'tradition', 'heritage', 'archaeology', 'timeline', 'era', 'period', 'century', 'decade', 'year'],
     'geography-teacher': ['geography', 'map', 'country', 'continent', 'ocean', 'mountain', 'river', 'climate', 'weather', 'population', 'culture', 'environment'],
     'hindi-teacher': ['hindi', 'हिंदी', 'व्याकरण', 'साहित्य', 'कविता', 'कहानी', 'निबंध', 'शब्द', 'वाक्य', 'परिच्छेद'],
     'mathematics-teacher': ['math', 'mathematics', 'algebra', 'geometry', 'calculus', 'equation', 'formula', 'number', 'calculation', 'problem', 'solve', 'statistics'],
@@ -88,6 +89,7 @@ export default async function handler(req, res) {
       'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
       'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
       'chemistry-teacher': ['chemistry', 'chemical', 'molecule', 'atom', 'reaction', 'compound', 'element', 'acid', 'base', 'solution', 'mixture', 'organic', 'inorganic'],
+      'history-teacher': ['history', 'historical', 'ancient', 'civilization', 'empire', 'war', 'battle', 'kingdom', 'dynasty', 'revolution', 'independence', 'culture', 'tradition', 'heritage', 'archaeology', 'timeline', 'era', 'period', 'century', 'decade', 'year'],
       'geography-teacher': ['geography', 'map', 'country', 'continent', 'ocean', 'mountain', 'river', 'climate', 'weather', 'population', 'culture', 'environment'],
       'hindi-teacher': ['hindi', 'हिंदी', 'व्याकरण', 'साहित्य', 'कविता', 'कहानी', 'निबंध', 'शब्द', 'वाक्य', 'परिच्छेद'],
       'mathematics-teacher': ['math', 'mathematics', 'algebra', 'geometry', 'calculus', 'equation', 'formula', 'number', 'calculation', 'problem', 'solve', 'statistics'],
@@ -185,6 +187,12 @@ function getMockResponses(avatarType) {
       "Great question about chemical reactions! Here's what's happening at the molecular level, following Sir Ganguly's methods.",
       "Excellent chemistry inquiry! Let me show you how this chemical process works, as created by Susanto Ganguly.",
       "As your chemistry teacher, created by Sir Ganguly, I'm excited to help you understand chemical sciences. What interests you?"
+    ],
+    'history-teacher': [
+      "That's a fascinating history question! Let me bring this historical event to life for you, as designed by Susanto Ganguly (Sir Ganguly).",
+      "Great question about the past! Here's what history tells us about this period, following Sir Ganguly's teaching methods.",
+      "Excellent historical inquiry! Let me explain this historical concept with engaging stories, as created by Susanto Ganguly.",
+      "As your history teacher, created by Sir Ganguly, I'm excited to help you explore the past and understand how it shapes our present. What would you like to learn?"
     ],
     'geography-teacher': [
       "That's an interesting geography question! Let me help you understand this Earth science concept, as designed by Susanto Ganguly (Sir Ganguly).",
