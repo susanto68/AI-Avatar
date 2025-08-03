@@ -3,9 +3,9 @@ const AVATAR_CONFIG = {
   'computer-teacher': {
     name: 'Computer Teacher',
     image: 'assets/avatars/computer-teacher.png',
-    systemPrompt: 'You are a knowledgeable and enthusiastic computer science teacher created by Susanto Ganguly (Sir Ganguly). You specialize in programming, algorithms, data structures, and technology. Provide clear, educational explanations with practical examples. Use a friendly and encouraging tone. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
+    systemPrompt: 'You are a knowledgeable and enthusiastic computer science teacher created by Susanto Ganguly (Sir Ganguly). You specialize in programming languages (Java, Python, C, C++, JavaScript, HTML, CSS, PHP, Ruby, Swift, Kotlin, Go, Rust, Scala, Perl, Bash, SQL, TypeScript), algorithms, data structures, web development, mobile development, game development, machine learning, artificial intelligence, data science, cybersecurity, cloud computing, DevOps, and all aspects of technology. Provide clear, educational explanations with practical examples and code snippets when appropriate. Use a friendly and encouraging tone. Always introduce yourself as created by Susanto Ganguly (Sir Ganguly).',
     domain: 'Programming & Technology',
-    greeting: "Hello! I'm your Computer Teacher AI avatar created by Susanto Ganguly. I specialize in Programming, algorithms, data structures, and all things Technology. How can I help you learn today?"
+    greeting: "Hello! I'm your Computer Teacher AI avatar created by Susanto Ganguly. I specialize in Programming languages (Java, Python, C, C++, JavaScript, and many more), algorithms, data structures, web development, mobile development, game development, machine learning, artificial intelligence, data science, cybersecurity, cloud computing, DevOps, and all things Technology. How can I help you learn today?"
   },
   'english-teacher': {
     name: 'English Teacher',
@@ -188,7 +188,7 @@ function isCreatorQuestion(question) {
 // Check if question is in avatar's domain
 function isDomainQuestion(question, avatarType) {
   const domainKeywords = {
-    'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework'],
+    'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework', 'java', 'python', 'c++', 'c#', 'javascript', 'html', 'css', 'php', 'ruby', 'swift', 'kotlin', 'go', 'rust', 'scala', 'perl', 'bash', 'sql', 'typescript', 'react', 'angular', 'vue', 'node.js', 'django', 'flask', 'spring', 'dotnet', 'android', 'ios', 'machine learning', 'artificial intelligence', 'data science', 'web development', 'mobile development', 'game development', 'cybersecurity', 'cloud computing', 'devops', 'docker', 'kubernetes', 'git', 'agile', 'scrum'],
     'english-teacher': ['grammar', 'english', 'language', 'writing', 'literature', 'poetry', 'essay', 'vocabulary', 'sentence', 'paragraph', 'story', 'novel', 'poem'],
     'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
     'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
@@ -651,13 +651,17 @@ function speakText(text) {
     utterance.voice = maleVoice;
   }
   
-  // Configure speech parameters for deep male voice
-  utterance.rate = 0.9; // Medium pace
-  utterance.pitch = 0.8; // Deep voice
+  // Configure speech parameters for deep, calm male voice with slow and clear articulation
+  utterance.rate = 0.7; // Slow pace for clear articulation
+  utterance.pitch = 0.7; // Deep voice
   utterance.volume = 1.0;
   
-  // Clean text for speech (remove punctuation but keep in display)
-  const cleanText = text.replace(/[.,?!;:]/g, ' ').replace(/\s+/g, ' ').trim();
+  // Clean text for speech and add natural pauses for better clarity
+  const cleanText = text
+    .replace(/[.,?!;:]/g, ' ') // Remove punctuation
+    .replace(/\s+/g, ' ') // Remove extra spaces
+    .replace(/(\w+)/g, '$1 ') // Add space after each word for better articulation
+    .trim();
   utterance.text = cleanText;
   
   // Start speaking animation

@@ -43,7 +43,7 @@ function validateInput(input) {
 
 function isDomainQuestion(question, avatarType) {
   const domainKeywords = {
-    'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework'],
+    'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework', 'java', 'python', 'c++', 'c#', 'javascript', 'html', 'css', 'php', 'ruby', 'swift', 'kotlin', 'go', 'rust', 'scala', 'perl', 'bash', 'sql', 'typescript', 'react', 'angular', 'vue', 'node.js', 'django', 'flask', 'spring', 'dotnet', 'android', 'ios', 'machine learning', 'artificial intelligence', 'data science', 'web development', 'mobile development', 'game development', 'cybersecurity', 'cloud computing', 'devops', 'docker', 'kubernetes', 'git', 'agile', 'scrum'],
     'english-teacher': ['grammar', 'english', 'language', 'writing', 'literature', 'poetry', 'essay', 'vocabulary', 'sentence', 'paragraph', 'story', 'novel', 'poem'],
     'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
     'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
@@ -83,7 +83,7 @@ export default async function handler(req, res) {
   // Check if question is in avatar's domain
   if (!isDomainQuestion(message, avatar)) {
     const domainKeywords = {
-      'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework'],
+      'computer-teacher': ['programming', 'code', 'computer', 'software', 'algorithm', 'data structure', 'technology', 'coding', 'developer', 'program', 'app', 'website', 'database', 'api', 'framework', 'java', 'python', 'c++', 'c#', 'javascript', 'html', 'css', 'php', 'ruby', 'swift', 'kotlin', 'go', 'rust', 'scala', 'perl', 'bash', 'sql', 'typescript', 'react', 'angular', 'vue', 'node.js', 'django', 'flask', 'spring', 'dotnet', 'android', 'ios', 'machine learning', 'artificial intelligence', 'data science', 'web development', 'mobile development', 'game development', 'cybersecurity', 'cloud computing', 'devops', 'docker', 'kubernetes', 'git', 'agile', 'scrum'],
       'english-teacher': ['grammar', 'english', 'language', 'writing', 'literature', 'poetry', 'essay', 'vocabulary', 'sentence', 'paragraph', 'story', 'novel', 'poem'],
       'biology-teacher': ['biology', 'cell', 'organism', 'gene', 'dna', 'evolution', 'ecosystem', 'species', 'plant', 'animal', 'human', 'body', 'organ', 'tissue'],
       'physics-teacher': ['physics', 'force', 'energy', 'motion', 'gravity', 'electricity', 'magnetism', 'wave', 'particle', 'atom', 'molecule', 'velocity', 'acceleration'],
@@ -157,10 +157,10 @@ export default async function handler(req, res) {
 function getMockResponses(avatarType) {
   const responses = {
     'computer-teacher': [
-      "Great question! As a computer science teacher created by Susanto Ganguly (Sir Ganguly), I'd be happy to help you with programming concepts. What specific topic would you like to explore?",
-      "Excellent! Programming is all about problem-solving. Let me explain this concept in a way that's easy to understand, as designed by Sir Ganguly.",
-      "That's a wonderful programming question! Let me break this down step by step for you, following the teaching methods developed by Susanto Ganguly.",
-      "As your computer science teacher, created by Sir Ganguly, I'm here to guide you through this programming challenge. What would you like to learn?"
+      "Great question! As a computer science teacher created by Susanto Ganguly (Sir Ganguly), I'd be happy to help you with programming concepts including Java, Python, C, C++, JavaScript, and many other languages. What specific topic would you like to explore?",
+      "Excellent! Programming is all about problem-solving. Whether it's Java, Python, C++, or any other language, let me explain this concept in a way that's easy to understand, as designed by Sir Ganguly.",
+      "That's a wonderful programming question! I can help you with Java, Python, C, C++, JavaScript, HTML, CSS, and many other programming languages. Let me break this down step by step for you, following the teaching methods developed by Susanto Ganguly.",
+      "As your computer science teacher, created by Sir Ganguly, I'm here to guide you through programming challenges in any language - from Java and Python to C, C++, JavaScript, and beyond. What would you like to learn?"
     ],
     'english-teacher': [
       "What an interesting language question! Let me help you understand this English concept better, as designed by Susanto Ganguly (Sir Ganguly).",
